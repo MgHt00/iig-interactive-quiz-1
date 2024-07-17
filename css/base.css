@@ -1,0 +1,30 @@
+@import url(fonts.css);
+
+html {
+  --body-teen-background-fallback: #FBC8D4;
+  --body-teen-background-gradient-1: #9795F0;
+  --body-teen-background-gradient-1-stop: 0%;
+  --body-teen-background-gradient-2: #FBC8D4;
+  --body-teen-background-gradient-2-stop: 88%;
+
+  --main-container-everlasting-fallback: #FDFCFB;
+  --main-container-everlasting-grdient-1: #FDFCFB;
+  --main-container-everlasting-grdient-1-stop: 0%;
+  --main-container-everlasting-grdient-2: #E2D1C3;
+  --main-container-everlasting-grdient-2-stop: 100%;
+
+  --main-font: "Poppins", sans-serif;
+  --main-font-weight: 400;
+  --main-font-style: normal;
+
+  --heading-font: "Pacifico", cursive;
+  --heading-weight: 400;
+  --heading-font-style: normal;
+}
+
+/* CSS RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
