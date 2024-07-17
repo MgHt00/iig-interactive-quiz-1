@@ -2,16 +2,11 @@
 
 html {
   --body-teen-background-fallback: #FBC8D4;
+  --body-teen-background-deg: 360deg;
   --body-teen-background-gradient-1: #9795F0;
   --body-teen-background-gradient-1-stop: 0%;
   --body-teen-background-gradient-2: #FBC8D4;
-  --body-teen-background-gradient-2-stop: 88%;
-
-  --main-container-everlasting-fallback: #FDFCFB;
-  --main-container-everlasting-grdient-1: #FDFCFB;
-  --main-container-everlasting-grdient-1-stop: 0%;
-  --main-container-everlasting-grdient-2: #E2D1C3;
-  --main-container-everlasting-grdient-2-stop: 100%;
+  --body-teen-background-gradient-2-stop: 88.5%;
 
   --main-font: "Poppins", sans-serif;
   --main-font-weight: 400;
@@ -20,6 +15,17 @@ html {
   --heading-font: "Pacifico", cursive;
   --heading-weight: 400;
   --heading-font-style: normal;
+
+  --main-container-everlasting-fallback: #FDFCFB;
+  --main-container-everlasting-deg: 119.06deg;
+  --main-container-everlasting-grdient-1: #FDFCFB;
+  --main-container-everlasting-grdient-1-stop: 0%;
+  --main-container-everlasting-grdient-2: #E2D1C3;
+  --main-container-everlasting-grdient-2-stop: 100%;
+  
+  --main-container-box-shadow: 8px 12px 2px rgba(0, 0, 0, 0.25);
+  --main-container-inset: 0px 4px 4px #FFB2A8;
+  --main-container-border-radius: 200px 40px 40px 40px;
 }
 
 /* CSS RESET */
@@ -27,4 +33,50 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background: var(--body-teen-background-fallback, #FBC8D4);
+  background: linear-gradient(
+    var(--body-teen-background-deg, 360deg),
+    var(--body-teen-background-gradient-1, #9795F0) var(--body-teen-background-gradient-1-stop, 0%),
+    var(--body-teen-background-gradient-2, #FBC8D4) var(--body-teen-background-gradient-2-stop, 88.5%) 
+  );
+  height: 100vh;
+
+  font-family: var(--main-font, "Poppins", sans-serif);
+  font-weight: var(--main-font-weight, 400);
+  font-style: var(--main-font-style, normal);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-container {
+  width: 762px;
+  height: 684px;
+  padding: 55px 60px 10px;
+
+  background: var(--main-container-everlasting-fallback, #FDFCFB);
+  background: linear-gradient(
+    var(--main-container-everlasting-deg, 119.06deg), 
+    var(--main-container-everlasting-grdient-1, #FDFCFB) var(--main-container-everlasting-grdient-1-stop, 0%), 
+    var(--main-container-everlasting-grdient-2, #E2D1C3) var(--main-container-everlasting-grdient-2-stop, 100%)
+  );
+
+  box-shadow: var(--main-container-box-shadow, 8px 12px 2px rgba(0, 0, 0, 0.25)), inset var(--main-container-inset, 0px 4px 4px #FFB2A8);
+  border-radius: 200px 40px 40px 40px;
+
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* main-container extras
+  position: absolute;
+  left: 99px;
+  top: 58px;
+  */
 }
