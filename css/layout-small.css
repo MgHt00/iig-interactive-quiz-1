@@ -9,6 +9,10 @@ html {
   --message-font-size: 20px;
   --message-line-height: 28px;
   --message-font-weight: 700;
+
+  --next-btn-font-size: 20px;
+  --next-btn-font-weight: 600;
+  --next-btn-line-height: 28px;
 }
 
 #main-container {
@@ -107,29 +111,13 @@ html {
 }
 
 #section-next-btn #next-btn {
-  /* Rectangle 4151 */
-
-  position: absolute;
-  /*left: 0px;
+  /*position: absolute;
+  left: 0px;
   top: 590px;*/
 
-  background: #D8D5EA;
-  box-shadow: 0px 6px 0px #BEB9DA;
-  border-radius: 20px;
-
-  width: 313px;
-  height: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-
-  font-family: 'Poppins';
-  font-style: italic;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 28px;
-
+  font-size: var(--next-btn-font-size, 20px);
+  font-weight: var(--next-btn-font-weight, 600);
+  line-height: var(--next-btn-line-height, 28px);
 }
 
 #section-separator {

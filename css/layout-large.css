@@ -8,6 +8,10 @@ html {
   --messgae-font-size: 22px;
   --messgae-line-height: 28px;
   --messgae-font-weight: 700;
+
+  --next-btn-font-size: 22px;
+  --next-btn-font-weight: 600;
+  --next-btn-line-height: 28px;
 }
 
 #main-container {
@@ -85,8 +89,6 @@ html {
 
   width: 74px;
   height: 14px;
-
-  /* Inside auto layout */
 }
 
 #message {
@@ -109,11 +111,17 @@ html {
   flex-grow: 0;
 }
 
-#next-btn {
+#section-next-btn {
   width: 316px;
   height: 60px;
   flex: none;
   flex-grow: 0;
+}
+
+#section-next-btn #next-btn {
+  font-size: var(--next-btn-font-size, 22px);
+  font-weight: var(--next-btn-font-weight, 600);
+  line-height: var(--next-btn-line-height, 28px);
 }
 
 #section-answers {

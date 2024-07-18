@@ -31,6 +31,9 @@ html {
 
   --header-color: #000000;
   --question-color: #000000;
+
+  --next-btn-background: #D8D5EA;
+  --next-btn-shadow: #BEB9DA;
 }
 
 /* CSS RESET */
@@ -99,9 +102,25 @@ body {
   flex-grow: 0;
 }
 
-#next-btn {
+#section-next-btn {
   flex: none;
   flex-grow: 0;
+}
+
+#section-next-btn #next-btn {
+  background: var(--next-btn-background, #D8D5EA);
+  box-shadow: 0px 6px 0px var(--next-btn-shadow, #BEB9DA);
+  border-radius: 20px;
+
+  width: 313px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  font-family: 'Poppins';
+  font-style: italic;
 }
 
 #section-pagination {
