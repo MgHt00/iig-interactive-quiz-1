@@ -1,0 +1,84 @@
+#main-container {
+  width: 346px;
+  height: 720px;
+  padding: 10px 60px;
+
+  box-shadow: var(--main-container-mobile-box-shadow, 8px 8px 2px rgba(0, 0, 0, 0.25)), inset var(--main-container-inset, 0px 4px 4px #FFB2A8);
+  border-radius: var(--main-container-mobile-border-radius, 80px 20px 20px 20px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  gap: 4px;
+}
+
+#section-q-and-a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 0px 30px;
+  gap: 10px;
+
+  width: 316px;
+  height: 648px;
+
+  /* Inside auto layout */
+  flex: none;
+  flex-grow: 0;
+}
+
+#section-q-and-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 0px 30px;
+  gap: 10px;
+
+  /*width: 316px;
+  height: 648px;*/
+
+  /* Inside auto layout */
+  flex: none;
+  flex-grow: 0;
+}
+
+#header {
+  order: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  flex: none;
+  flex-grow: 0;
+}
+
+#question {
+  order: 1;
+}
+
+#section-pagination {
+  order: 4;
+}
+
+#message {
+  order: 2;
+}
+
+#next-btn {
+  order: 5;
+}
+
+#section-separator {
+  display: none;
+}
+
+#section-answers {
+  order: 3;
+}
+
+#section-footer {
+  order: 6;
+}
