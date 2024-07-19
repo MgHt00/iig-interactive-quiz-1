@@ -34,6 +34,13 @@ html {
 
   --next-btn-background: #D8D5EA;
   --next-btn-shadow: #BEB9DA;
+
+  --answer-container-shadow: #D8D5EA;
+  --answer-container-border-radius: 20px;
+  --ans-a-background: #A2D2FF;
+  --ans-b-background: #FFC8DD;
+  --ans-c-background: #FFB2A8;
+  --ans-d-background: #CDB4DB;
 }
 
 /* CSS RESET */
@@ -126,4 +133,25 @@ body {
 #section-pagination {
   flex: none;
   flex-grow: 0;
+}
+
+#section-answers .answer-container {
+  box-shadow: 0px 6px 0px var(--answer-container-shadow, #D8D5EA);
+  border-radius: var(--answer-container-border-radius, 20px);
+}
+
+.answer-container.ans-a {
+  background: var(--ans-a-background, #A2D2FF);
+}
+
+.answer-container.ans-b {
+  background: var(--ans-b-background, #FFC8DD);
+}
+
+.answer-container.ans-c {
+  background: var(--ans-c-background, #FFB2A8);
+}
+
+.answer-container.ans-d {
+  background: var(--ans-d-background, #CDB4DB);
 }

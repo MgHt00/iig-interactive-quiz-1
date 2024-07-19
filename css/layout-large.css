@@ -99,13 +99,30 @@ html {
   justify-content: center;
   align-items: center;
   padding: 0px;
-  gap: 25px;
+  gap: 25px; /* gap between buttons */
 
   width: 256px;
   /*height: 511px;*/
 
   flex: none;
   align-self: stretch;
+  flex-grow: 0;
+}
+
+#section-answers .answer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 20px 12px 15px;
+  gap: 5px;
+
+  width: 256px;
+  height: 84px;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
   flex-grow: 0;
 }
 
