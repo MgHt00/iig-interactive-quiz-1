@@ -93,10 +93,20 @@ html {
 
 #section-answers {
   grid-area: answers;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 0px;
-  /*gap: 25px;*/
+  gap: 25px;
+
   width: 256px;
-  height: 511px;
+  /*height: 511px;*/
+
+  flex: none;
+  align-self: stretch;
+  flex-grow: 0;
 }
 
 #section-footer {
