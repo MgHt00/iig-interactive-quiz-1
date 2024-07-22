@@ -133,6 +133,8 @@ body {
 
   font-family: 'Poppins';
   font-style: italic;
+
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 #section-pagination {
@@ -143,6 +145,7 @@ body {
 #section-answers .answer-container {
   box-shadow: 0px 6px 0px var(--answer-container-shadow, #D8D5EA);
   border-radius: var(--answer-container-border-radius, 20px);
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .answer-container.ans-a {
@@ -168,4 +171,9 @@ body {
   font-size: var(--answer-text-font-size, 22px);
   line-height: var(--answer-text-line-height, 33px);
   color: var(--answer-text-color, #252525);
+}
+
+.answer-container:hover,
+#next-btn:hover {
+  transform: scale(1.05);
 }
