@@ -1,0 +1,32 @@
+[
+  { 
+    "question": "There is no way that I can agree to you __________ early today. ", 
+    "answers": ["submitting", "renouncing", "leaving", "departing"], 
+    "correctAnswer": "leaving"
+  },
+  {
+    "question": "I must object and make it clear that I am totally __________ any measures that suggest changes to the original scheme.",
+    "answers": ["up", "without", "against", "off"],
+    "correctAnswer": "against"
+  },
+  {
+    "question": "He has the __________ of always rejecting any idea that will change the current arrangements.", 
+    "answers": ["habit", "custom", "task", "job"], 
+    "correctAnswer": "habit" 
+  },
+  {
+    "question": "I cannot condone that sort of __________ in my establishment and would ask you to remember that in future.", 
+    "answers": ["routine", "manners", "going", "behaviour"], 
+    "correctAnswer": "behaviour" 
+  },
+  {
+    "question": "I have no choice really but to turn __________ your recent proposal because it is completely unworkable.", 
+    "answers": ["off", "over", "down", "across"], 
+    "correctAnswer": "down" 
+  },
+  {
+    "question": "The artist was known for her ability to ________ emotions through her paintings.", 
+    "answers": ["display", "convey", "show", "express"], 
+    "correctAnswer": "convey" 
+  }
+]
