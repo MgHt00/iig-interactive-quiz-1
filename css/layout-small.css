@@ -144,4 +144,16 @@ html {
 
 #section-footer {
   order: 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 52px;
+  flex: none;
+  flex-grow: 0;
+}
+
+#section-footer img {
+  width: 62px;
+  height: 42px;
 }

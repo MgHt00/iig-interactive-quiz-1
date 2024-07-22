@@ -174,3 +174,8 @@ html {
   justify-content: center;
   align-items: center;
 }
+
+#section-footer img {
+  width: 90px;
+  height: 61px;
+}
