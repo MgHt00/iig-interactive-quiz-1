@@ -41,6 +41,11 @@ html {
   --ans-b-background: #FFC8DD;
   --ans-c-background: #FFB2A8;
   --ans-d-background: #CDB4DB;
+
+  --answer-text-font-weight: 600;
+  --answer-text-font-size: 22px;
+  --answer-text-line-height: 33px;
+  --answer-text-color: #252525;
 }
 
 /* CSS RESET */
@@ -154,4 +159,13 @@ body {
 
 .answer-container.ans-d {
   background: var(--ans-d-background, #CDB4DB);
+}
+
+.answer-container .answer-text {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: var(--answer-text-font-weight, 600);
+  font-size: var(--answer-text-font-size, 22px);
+  line-height: var(--answer-text-line-height, 33px);
+  color: var(--answer-text-color, #252525);
 }

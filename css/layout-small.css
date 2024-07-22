@@ -13,6 +13,10 @@ html {
   --next-btn-font-size: 20px;
   --next-btn-font-weight: 600;
   --next-btn-line-height: 28px;
+
+  --answer-text-font-weight: 500;
+  --answer-text-font-size: 20px;
+  --answer-text-line-height: 30px;
 }
 
 #main-container {
@@ -126,6 +130,16 @@ html {
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+}
+
+.answer-container .answer-alphabet {
+  display: none;
+}
+
+.answer-container .answer-text {
+  font-weight: var(--answer-text-font-weight, 500);
+  font-size: var(--answer-text-font-size, 20px);
+  line-height: var(--answer-text-line-height 30px);
 }
 
 #section-footer {

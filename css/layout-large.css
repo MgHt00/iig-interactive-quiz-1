@@ -126,6 +126,42 @@ html {
   flex-grow: 0;
 }
 
+.answer-container .answer-alphabet{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  width: 65px;
+  height: 60px;
+
+  /* Inside auto layout */
+  flex: none;
+  flex-grow: 0;
+}
+
+.answer-alphabet img {
+  width: 65px;
+  height: 60px;
+}
+
+.answer-container .answer-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+
+    width: 81px;
+    height: 33px;
+    flex: none;
+    flex-grow: 0;
+}
+
+
 #section-footer {
   grid-area: footer;
   padding: 0px;
