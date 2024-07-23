@@ -19,6 +19,8 @@ const answerClassList = ["ans-a", "ans-b", "ans-c", "ans-d"];
 const alphabetImg = ["assets/a.png", "assets/b.png", "assets/c.png", "assets/d.png"];
 const alphabetAlt = ["a", "b", "c", "d"];
 
+let score = 0;
+
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -132,6 +134,10 @@ function handleAnswerClick(event) {
 
 function nextButtonClick(event) {
   messageContainer.textContent = "";
+  messageContainer.className = "";
+  console.log(`Original score: ${score}`);
+  score++;
+  console.log(`Updated score: ${score}`);
   // spliceQuestion() is called, if there is still a question left in `shuffledQuestions`
     if ((currentQuestionNo <= totalNumOfQuestion) && (shuffledQuestions.length !== 0)) {
       spliceQuestion();
@@ -159,9 +165,9 @@ function finishSession() {
   separatorContainer.remove();
   
   mainContainer.classList.add("finished");
-  messageContainer.classList.remove("correct");
+  messageContainer.className = "";
   messageContainer.classList.add("finished");
-  messageContainer.innerHTML = "Well done!<br>You've completed all the questions.";
+  messageContainer.innerHTML = `Well done!<br>You've completed all the questions.<br><br>Your score: ${score} of ${totalNumOfQuestion}`;
 
   // Remove Next button from display
   if (nextButton) {
