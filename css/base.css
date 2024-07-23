@@ -173,7 +173,11 @@ body {
   color: var(--answer-text-color, #252525);
 }
 
-.answer-container:hover,
-#next-btn:hover {
+.answer-container:not([disabled]):hover,
+#next-btn:not([disabled]):hover{
   transform: scale(1.05);
+}
+
+.disabled {
+  opacity: 0.3;
 }

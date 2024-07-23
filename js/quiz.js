@@ -4,7 +4,7 @@ const questionContainer = document.querySelector("#question");
 const answersContainer = document.querySelector("#section-answers");
 const paginationContainer = document.querySelector("#section-pagination");
 const messageContainer = document.querySelector("#message");
-const nextButton = document.querySelector("#next-btn");
+const nextButton = document.querySelector("#section-next-btn");
 let currentQuestionIndex; // Index to match the question and the answers.
 let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
 let questions = []; // Data will be fetch from JSON
@@ -41,39 +41,6 @@ function randomQuestion() {
   let tempAnswersArray = [...shuffledQuestions[currentQuestionIndex].answers];
 
   // Display the answers
-  /*for (let answer of tempAnswersArray) {
-    const answerButton = document.createElement("button");
-    answerButton.setAttribute("class", "answer-btn");
-    answerButton.textContent = answer;
-    answerButton.addEventListener("click", handleAnswerClick);
-    answersContainer.append(answerButton);
-  }
-  
-  for (let answer of tempAnswersArray) {
-    const tempAnswerContainer = document.createElement("div");
-      //tempAnswerContainer.setAttribute("class", "answer-container");
-      tempAnswerContainer.classList.add("answer-container");
-      tempAnswerContainer.classList.add("ans-a");
-
-    const tempAnswerAlphabet = document.createElement("div");
-    tempAnswerAlphabet.setAttribute("class", "answer-alphabet");
-
-    const tempAnswerText = document.createElement("div");
-    tempAnswerText.setAttribute("class", "answer-text");
-
-    // JS: assign answer
-    tempAnswerText.textContent = answer;
-
-    // HTML: add two divs 'answer-alphabet' and 'answer-text' to 'answer-container'
-    tempAnswerContainer.append(tempAnswerAlphabet);
-    tempAnswerContainer.append(tempAnswerText);
-
-    tempAnswerContainer.addEventListener("click", handleAnswerClick);
-
-    // HTML: add 'answer-container' to 'section-answers'
-    answersContainer.append(tempAnswerContainer);
-  }*/
-
   tempAnswersArray.forEach((answer, index) => {
     // Refer this HTML structure
     // <div class="answer-container ans-a">
