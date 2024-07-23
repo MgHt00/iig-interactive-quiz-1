@@ -1,4 +1,5 @@
 let totalNumOfQuestion = 2; // Set the total num of questions to show in the quiz.
+const mainContainer = document.querySelector("#main-container");
 const headerContainer = document.querySelector("#header");
 const questionContainer = document.querySelector("#question");
 const answersContainer = document.querySelector("#section-answers");
@@ -157,7 +158,10 @@ function finishSession() {
   paginationContainer.remove();
   separatorContainer.remove();
   
-  messageContainer.textContent = "Well done! You've completed all the questions.";
+  mainContainer.classList.add("finished");
+  messageContainer.classList.remove("correct");
+  messageContainer.classList.add("finished");
+  messageContainer.innerHTML = "Well done!<br>You've completed all the questions.";
 
   // Remove Next button from display
   if (nextButton) {
