@@ -1,10 +1,11 @@
-let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
+let totalNumOfQuestion = 2; // Set the total num of questions to show in the quiz.
 const headerContainer = document.querySelector("#header");
 const questionContainer = document.querySelector("#question");
 const answersContainer = document.querySelector("#section-answers");
 const paginationContainer = document.querySelector("#section-pagination");
 const messageContainer = document.querySelector("#message");
 const nextButton = document.querySelector("#section-next-btn");
+const separatorContainer = document.querySelector("#section-separator");
 let currentQuestionIndex; // Index to match the question and the answers.
 let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
 let questions = []; // Data will be fetch from JSON
@@ -154,6 +155,7 @@ function finishSession() {
   questionContainer.remove();
   answersContainer.remove();
   paginationContainer.remove();
+  separatorContainer.remove();
   
   messageContainer.textContent = "Well done! You've completed all the questions.";
 
