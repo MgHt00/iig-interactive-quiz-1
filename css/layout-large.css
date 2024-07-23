@@ -40,6 +40,7 @@ html {
   grid-template-areas: 
     "header separator answers"
     "message message message"
+    "reload reload reload"
     "footer footer footer";
 }
 
@@ -80,9 +81,9 @@ html {
 }
 
 #message.finished {
-  display: flex;
   margin: auto;
   width: 60%;
+  height: max-content;
 }
 
 #section-separator {
@@ -94,6 +95,12 @@ html {
 
 #section-next-btn {
   grid-area: next;
+  width: 316px;
+  height: 60px;
+}
+
+#section-reload {
+  grid-area: reload;
   width: 316px;
   height: 60px;
 }

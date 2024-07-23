@@ -128,13 +128,15 @@ body {
   color: var(--message-correct-color, #287E1C);
 }
 
-#section-next-btn {
+#section-next-btn,
+#section-reload {
   flex: none;
   flex-grow: 0;
   transition: background-color 0.3s, transform 0.3s;
 }
 
-#section-next-btn #next-btn {
+#section-next-btn #next-btn,
+#section-reload #reload-btn{
   background: var(--next-btn-background, #D8D5EA);
   box-shadow: 0px 6px 0px var(--next-btn-shadow, #BEB9DA);
   border-radius: 20px;
@@ -150,6 +152,14 @@ body {
   font-style: italic;
 
   transition: background-color 0.3s, transform 0.3s;
+}
+
+#section-reload {
+  margin: auto;
+}
+
+#section-reload.hide {
+  display: none;
 }
 
 #section-pagination {
@@ -203,7 +213,8 @@ body {
 }
 
 .answer-container:not(.disabled):hover,
-#section-next-btn:not(.disabled):hover{
+#section-next-btn:not(.disabled):hover,
+#section-reload:hover {
   transform: scale(1.05);
 }
 
