@@ -117,6 +117,7 @@ body {
 #section-next-btn {
   flex: none;
   flex-grow: 0;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 #section-next-btn #next-btn {
@@ -174,7 +175,7 @@ body {
 }
 
 .answer-container:not([disabled]):hover,
-#next-btn:not([disabled]):hover{
+#section-next-btn:not([disabled]):hover{
   transform: scale(1.05);
 }
 
