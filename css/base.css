@@ -174,11 +174,12 @@ body {
   color: var(--answer-text-color, #252525);
 }
 
-.answer-container:not([disabled]):hover,
-#section-next-btn:not([disabled]):hover{
+.answer-container:not(.disabled):hover,
+#section-next-btn:not(.disabled):hover{
   transform: scale(1.05);
 }
 
 .disabled {
-  opacity: 0.3;
+  opacity: 0.5;
+  pointer-events: none;
 }
