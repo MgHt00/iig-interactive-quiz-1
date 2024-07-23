@@ -104,9 +104,10 @@ function handleAnswerClick(event) {
     event.target.classList.add("correct");
 
     // Disable all buttons
-    const allButtons = document.querySelectorAll(".answer-btn");
+    const allButtons = document.querySelectorAll(".answer-container");
     for (let button of allButtons) {
-      button.disabled = true;
+      //button.disabled = true;
+      button.classList.add("disabled");
     }
     
     // Simulate re-enabling the button after 0.3 seconds
@@ -120,7 +121,7 @@ function handleAnswerClick(event) {
     messageContainer.textContent = correctMessages[random(0, correctMessages.length-1)];
   } else {
     // Adds the `incorrect` class to the button that was clicked
-    event.target.classList.add("incorrect");
+    event.target.classList.add("disabled");
     messageContainer.textContent = wrongMessages[random(0, wrongMessages.length-1)];
   }
 }
