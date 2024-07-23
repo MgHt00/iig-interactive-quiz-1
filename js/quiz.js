@@ -129,6 +129,7 @@ function handleAnswerClick(event) {
 }
 
 function nextButtonClick(event) {
+  messageContainer.textContent = "";
   // spliceQuestion() is called, if there is still a question left in `shuffledQuestions`
     if ((currentQuestionNo <= totalNumOfQuestion) && (shuffledQuestions.length !== 0)) {
       spliceQuestion();
