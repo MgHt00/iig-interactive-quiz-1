@@ -35,6 +35,9 @@ html {
   --next-btn-background: #D8D5EA;
   --next-btn-shadow: #BEB9DA;
 
+  --message-incorrect-color: #D64F41;
+  --message-correct-color: #287E1C;
+
   --answer-container-shadow: #D8D5EA;
   --answer-container-border-radius: 20px;
   --ans-a-background: #A2D2FF;
@@ -112,6 +115,14 @@ body {
   text-align: center;
   flex: none;
   flex-grow: 0;
+}
+
+#message.incorrect {
+  color: var(--message-incorrect-color, #D64F41);
+}
+
+#message.correct {
+  color: var(--message-correct-color, #287E1C);
 }
 
 #section-next-btn {

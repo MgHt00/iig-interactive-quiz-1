@@ -119,10 +119,12 @@ function handleAnswerClick(event) {
     nextButton.addEventListener("click", nextButtonClick);
     // Show random correct message drawn from `correctMessages` array
     messageContainer.textContent = correctMessages[random(0, correctMessages.length-1)];
+    messageContainer.classList.add("correct");
   } else {
     // Adds the `incorrect` class to the button that was clicked
     event.target.classList.add("disabled");
     messageContainer.textContent = wrongMessages[random(0, wrongMessages.length-1)];
+    messageContainer.classList.add("incorrect");
   }
 }
 
