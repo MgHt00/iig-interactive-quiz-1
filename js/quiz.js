@@ -1,10 +1,10 @@
-let totalNumOfQuestion = 4; // Set the total num of questions to show in the quiz.
-const headerContainer = document.querySelector("#header-container");
-const questionContainer = document.querySelector(".question-container");
-const answersContainer = document.querySelector(".answers-container");
-const paginationContainer = document.querySelector(".pagination-container");
-const messageContainer = document.querySelector(".message-container");
-const nextButton = document.querySelector(".next-btn");
+let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
+const headerContainer = document.querySelector("#header");
+const questionContainer = document.querySelector("#question");
+const answersContainer = document.querySelector("#section-answers");
+const paginationContainer = document.querySelector("#section-pagination");
+const messageContainer = document.querySelector("#message");
+const nextButton = document.querySelector("#next-btn");
 let currentQuestionIndex; // Index to match the question and the answers.
 let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
 let questions = []; // Data will be fetch from JSON
@@ -12,6 +12,10 @@ let shuffledQuestions = []; // To copy the questions array to manipulate without
 
 const correctMessages = ["Fantastic!", "Awesome!", "Brilliant!", "Great job!", "Excellent!", "Superb!", "Outstanding!"];
 const wrongMessages = ["Almost there!", "Keep going!", "Nice effort!", "Keep practicing!", "Good try!"];
+
+const answerClassList = ["ans-a", "ans-b", "ans-c", "ans-d"];
+const alphabetImg = ["assets/a.png", "assets/b.png", "assets/c.png", "assets/d.png"];
+const alphabetAlt = ["a", "b", "c", "d"];
 
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -37,13 +41,73 @@ function randomQuestion() {
   let tempAnswersArray = [...shuffledQuestions[currentQuestionIndex].answers];
 
   // Display the answers
-  for (let answer of tempAnswersArray) {
+  /*for (let answer of tempAnswersArray) {
     const answerButton = document.createElement("button");
     answerButton.setAttribute("class", "answer-btn");
     answerButton.textContent = answer;
     answerButton.addEventListener("click", handleAnswerClick);
     answersContainer.append(answerButton);
   }
+  
+  for (let answer of tempAnswersArray) {
+    const tempAnswerContainer = document.createElement("div");
+      //tempAnswerContainer.setAttribute("class", "answer-container");
+      tempAnswerContainer.classList.add("answer-container");
+      tempAnswerContainer.classList.add("ans-a");
+
+    const tempAnswerAlphabet = document.createElement("div");
+    tempAnswerAlphabet.setAttribute("class", "answer-alphabet");
+
+    const tempAnswerText = document.createElement("div");
+    tempAnswerText.setAttribute("class", "answer-text");
+
+    // JS: assign answer
+    tempAnswerText.textContent = answer;
+
+    // HTML: add two divs 'answer-alphabet' and 'answer-text' to 'answer-container'
+    tempAnswerContainer.append(tempAnswerAlphabet);
+    tempAnswerContainer.append(tempAnswerText);
+
+    tempAnswerContainer.addEventListener("click", handleAnswerClick);
+
+    // HTML: add 'answer-container' to 'section-answers'
+    answersContainer.append(tempAnswerContainer);
+  }*/
+
+  tempAnswersArray.forEach((answer, index) => {
+    // Refer this HTML structure
+    // <div class="answer-container ans-a">
+    //    <div class="answer-alphabet"><img src="assets/a.png" alt="A"></div>
+    //    <div class="answer-text">aaaaa</div>
+    //  </div>
+    const tempAnswerContainer = document.createElement("div");
+    tempAnswerContainer.classList.add("answer-container", answerClassList[index]);
+
+    const tempAnswerAlphabet = document.createElement("div");
+    tempAnswerAlphabet.setAttribute("class", "answer-alphabet");
+
+    const tempAlphabetImg =  document.createElement("img");
+    tempAlphabetImg.src = alphabetImg[index];
+    tempAlphabetImg.alt = alphabetAlt[index];
+
+    const tempAnswerText = document.createElement("div");
+    tempAnswerText.setAttribute("class", "answer-text");
+
+    // JS: assign answer
+    tempAnswerText.textContent =  answer;
+
+    // HTML: add '<img>' to 'answer-alphabet'
+    tempAnswerAlphabet.append(tempAlphabetImg);
+
+    // HTML: add two divs 'answer-alphabet' and 'answer-text' to 'answer-container'
+    tempAnswerContainer.append(tempAnswerAlphabet);
+    tempAnswerContainer.append(tempAnswerText);
+
+    tempAnswerContainer.addEventListener("click", handleAnswerClick);
+
+    // HTML: add 'answer-container' to 'section-answers'
+    answersContainer.append(tempAnswerContainer);
+  });
 }
 
 function DisplayPagination() {
