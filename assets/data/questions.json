@@ -25,8 +25,28 @@
     "correctAnswer": "down" 
   },
   {
-    "question": "The artist was known for her ability to ________ emotions through her paintings.", 
-    "answers": ["display", "convey", "show", "express"], 
-    "correctAnswer": "convey" 
+    "question": "They can't possibly go __________ with your suggestions because it will involve too much expenditure.", 
+    "answers": ["over", "along", "in", "above"], 
+    "correctAnswer": "along" 
+  },
+  {
+    "question": "Quite honestly I'd have to be out of my __________ to sanction what is a crazy proposition.", 
+    "answers": ["sense", "balance", "thought", "mind"], 
+    "correctAnswer": "mind" 
+  },
+  {
+    "question": "When her father discovered that his daughter wanted to marry a pop singer, he decided to put every __________ in their way to prevent the marriage.", 
+    "answers": ["obstacle", "burden", "impediment", "problem"], 
+    "correctAnswer": "obstacle" 
+  },
+  {
+    "question": "He told me there was definitely no __________ that I would pass my examination until I did some work.", 
+    "answers": ["occasion", "chance", "opportunity", "time"], 
+    "correctAnswer": "chance" 
+  },
+  {
+    "question": "You could tell by the _________ he refused to smile that he didn't like the story. ", 
+    "answers": ["method", "plan", "way", "path"], 
+    "correctAnswer": "way" 
   }
 ]
