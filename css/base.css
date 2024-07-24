@@ -61,6 +61,10 @@ html {
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   background: var(--body-teen-background-fallback, #FBC8D4);
   background: linear-gradient(
@@ -68,7 +72,9 @@ body {
     var(--body-teen-background-gradient-1, #9795F0) var(--body-teen-background-gradient-1-stop, 0%),
     var(--body-teen-background-gradient-2, #FBC8D4) var(--body-teen-background-gradient-2-stop, 88.5%) 
   );
-  height: 100vh;
+
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 
   font-family: var(--main-font, "Poppins", sans-serif);
   font-weight: var(--main-font-weight, 400);
@@ -77,6 +83,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  /*min-height: 100vh;
+  height: calc(var(--vh) * 100); /* 100 times the custom property to cover full viewport height */
+
+  min-height: 100%;
+  height: auto;
 }
 
 #main-container {

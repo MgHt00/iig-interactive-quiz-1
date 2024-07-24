@@ -1,28 +1,36 @@
 html {
-  --header-font-size: 34px;
-  --header-line-height: 44px;
+  --header-font-size: 32px;
+  --header-line-height: 43px;
 
-  --question-font-size: 20px;
-  --question-height: 30px;
+  --question-font-size: 18px;
+  --question-line-height: 27px;
   --question-font-weight: 350;
 
-  --message-font-size: 20px;
-  --message-line-height: 28px;
+  --message-font-size: 18px;
+  --message-line-height: 27px;
   --message-font-weight: 700;
 
-  --next-btn-font-size: 20px;
+  --next-btn-font-size: 18px;
   --next-btn-font-weight: 600;
-  --next-btn-line-height: 28px;
+  --next-btn-line-height: 26px;
 
   --answer-text-font-weight: 500;
-  --answer-text-font-size: 20px;
-  --answer-text-line-height: 30px;
+  --answer-text-font-size: 18px;
+  --answer-text-line-height: 27px;
+}
+
+/* Media query for screens less than 720px in height */
+@media (max-height: 720px) {
+  body {
+    align-items: flex-start;
+  } 
 }
 
 #main-container {
   width: 346px;
-  min-height: 720px;
+  min-height: 700px;
   padding: 10px 60px;
+  margin: 5px 0 15px;
 
   box-shadow: var(--main-container-mobile-box-shadow, 8px 8px 2px rgba(0, 0, 0, 0.25)), inset var(--main-container-inset, 0px 4px 4px #FFB2A8);
   border-radius: var(--main-container-mobile-border-radius, 80px 20px 20px 20px);
@@ -30,7 +38,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+  justify-content: space-between; /* Ensure space is distributed between items */
   gap: 10px;
 }
 
@@ -48,7 +56,7 @@ html {
   order: 1;
   width: 284px;
   font-size: var(--question-font-size, 20px);
-  line-height: var(--question-height, 30px);
+  line-height: var(--question-line-height, 30px);
   font-weight: 350;
   display: flex;
   align-items: center;
@@ -64,14 +72,14 @@ html {
   padding: 0px 0px 4px;
   gap: 6px;
 
-  width: 74px;
-  height: 18px;
+  /*width: 74px;
+  height: 18px;*/
 }
 
 #message {
   order: 2;
   width: 316px;
-  height: 28px;
+  /*height: 28px;*/
   font-size: var(--message-font-size, 20px);
   line-height: var(--message-line-height, 28px);
   font-weight: var(--message-font-weight, 700);
@@ -81,7 +89,7 @@ html {
 #section-next-btn {
   order: 5;
   width: 316px;
-  height: 46px;
+  /*height: 46px;*/
 }
 
 #section-next-btn #next-btn {
@@ -123,7 +131,7 @@ html {
   gap: 5px;
 
   width: 316px;
-  height: 46px;
+  /*height: 46px;*/
 
   /* Inside auto layout */
   flex: none;
@@ -148,7 +156,7 @@ html {
   justify-content: center;
   align-items: center;
   width: 90px;
-  height: 52px;
+  /*height: 52px;*/
   flex: none;
   flex-grow: 0;
   margin-top: auto;

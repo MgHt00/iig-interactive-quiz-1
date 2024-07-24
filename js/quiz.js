@@ -1,4 +1,4 @@
-let totalNumOfQuestion = 3; // Set the total num of questions to show in the quiz.
+let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
 const mainContainer = document.querySelector("#main-container");
 const headerContainer = document.querySelector("#header");
 const questionContainer = document.querySelector("#question");
