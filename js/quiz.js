@@ -1,4 +1,4 @@
-let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
+let totalNumOfQuestion = 3; // Set the total num of questions to show in the quiz.
 const mainContainer = document.querySelector("#main-container");
 const headerContainer = document.querySelector("#header");
 const questionContainer = document.querySelector("#question");
@@ -20,6 +20,7 @@ const answerClassList = ["ans-a", "ans-b", "ans-c", "ans-d"];
 const alphabetImg = ["assets/a.png", "assets/b.png", "assets/c.png", "assets/d.png"];
 const alphabetAlt = ["a", "b", "c", "d"];
 
+let noOfTries = 1;
 let score = 0;
 
 function random(min, max) {
@@ -100,6 +101,7 @@ function DisplayPagination() {
 
 function handleAnswerClick(event) {
   const selectedAnswer = event.target.textContent;
+  console.log(`Previous score is ${score}`);
 
   // Assign currently showing question and answer set to a temp object.
   const currentQuestionSet = shuffledQuestions[currentQuestionIndex];
@@ -130,15 +132,20 @@ function handleAnswerClick(event) {
     event.target.classList.add("disabled");
     messageContainer.textContent = wrongMessages[random(0, wrongMessages.length-1)];
     messageContainer.classList.add("incorrect");
+    noOfTries++;
+    console.log(`Incorrect answser.`);
+    console.log(`noOfTries is increased as: ${noOfTries}`);
   }
+  score = calScore();
 }
 
 function nextButtonClick(event) {
   messageContainer.textContent = "";
   messageContainer.className = "";
-  console.log(`Original score: ${score}`);
-  score++;
-  console.log(`Updated score: ${score}`);
+  // reset no. of tries to 1
+  console.log(`_________`);
+  console.log(`noOfTries is reset to 1.`);
+  noOfTries = 1;
   // spliceQuestion() is called, if there is still a question left in `shuffledQuestions`
     if ((currentQuestionNo <= totalNumOfQuestion) && (shuffledQuestions.length !== 0)) {
       spliceQuestion();
@@ -147,12 +154,6 @@ function nextButtonClick(event) {
     }
     DisplayPagination();
 }
-
-function reloadButtonClick(event) {
-  reloadContainer.classList.add("hide");
-  location.reload();
-}
-
 
 function spliceQuestion() {
   // Delete shown questions from `shuffleQuestions` array
@@ -181,7 +182,39 @@ function finishSession() {
   }
 
   reloadContainer.classList.remove("hide");
-  reloadContainer.addEventListener("click", reloadButtonClick);
+  reloadContainer.addEventListener("click", reloadSession);
+}
+
+function reloadSession() {
+  // Clear header, previous question, answers, and pagination; then show the complete message
+  reloadContainer.classList.add("hide");
+  messageContainer.remove();
+  headerContainer.remove();
+  questionContainer.remove();
+  answersContainer.remove();
+  paginationContainer.remove();
+  separatorContainer.remove();
+  
+  //mainContainer.classList.add("finished");
+  //messageContainer.className = "";
+  //messageContainer.classList.add("finished");
+
+  // Remove Next button from display
+  if (nextButton) {
+    nextButton.remove();
+  }
+  location.reload();
+}
+
+function calScore() {
+  if (noOfTries === 1) {
+    console.log(`Correct on the first time.`);
+    noOfTries = 1;
+    console.log(`noOfTries is reset to 1.`);
+    score++;
+  }
+  console.log(`Updated score is: ${score}`);
+  return score;
 }
 
 // Fetch questions from JSON file
