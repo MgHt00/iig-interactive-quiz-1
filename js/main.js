@@ -2,25 +2,10 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// To disable HTML node. mode is for fast or with animation
-function makeItDisabled(node, mode) {
-  if (!mode) {
-    // Simulate disabling the button after 0.3 seconds 
-    // and add `disabled` class
-    setTimeout(() => {
-      node.disabled = true;
-      node.classList.add("disabled");
-    }, 300);
-  } else {
-    node.disabled = true;
-    node.classList.add("disabled");
-  }
-}
-
 // toggling the disabled state of a node with an optional delay
-function setNodeDisabled({ node, isDisabled, fastOrSlow }) {
+function setNodeDisabled({ node, isDisabled, changeItFast }) {
   console.groupCollapsed("setNodeDisabled()");
-  console.info("Speed option:", fastOrSlow);
+  console.info("Change it in fast mode:", changeItFast);
 
   const applyState = () => {
     node.disabled = isDisabled;
@@ -31,7 +16,7 @@ function setNodeDisabled({ node, isDisabled, fastOrSlow }) {
     }
   };
 
-  if (!fastOrSlow && isDisabled) { // Use setTimeout only when isDisabled is true, and if fastOrSlow is false.
+  if (!changeItFast && isDisabled) { // Use setTimeout only when isDisabled is true, and if changeItFast is false.
     setTimeout(applyState, 300); 
   } else {
     applyState();
@@ -40,10 +25,8 @@ function setNodeDisabled({ node, isDisabled, fastOrSlow }) {
   console.groupEnd();
 }
 
-
-
 // to clean HTML node
-function cleanIt(node) {
+function cleanIt({node}) {
   node.innerHTML = '';
 }
 
@@ -52,22 +35,28 @@ function buildNode({element, classNames = []}) {
   console.groupCollapsed("buildNode()");
 
   const BLK = document.createElement(element);
-  if(classNames.length !== 0) {
-    addClass(BLK, ...classNames);
-  }
+  
+  // Add classes if provided
+  addClass({ element: BLK, classNames }); 
+  
   console.groupEnd();
   return BLK;
 }
 
 // to add class to a HTML node
-function addClass(element, ...classNames) {
+function addClass({ element, classNames = []} ) {
   console.groupCollapsed("addClass()");
-  //console.info(classNames);
-  console.info(element);
+
+  // Ensure classNames is an array, regardless of whether a string or array is passed
+  if (!Array.isArray(classNames)) { 
+    classNames = [classNames];
+  }
+
   classNames.forEach(c => {
-    console.info("class: ", c);
+    console.info("element:", element, "class: ", c);
     element.classList.add(c);
   });
+
   console.info("Styled element: ", element);
   console.groupEnd();
 }

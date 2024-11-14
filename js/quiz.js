@@ -1,6 +1,12 @@
 function randomQuestion() {
-  makeItDisabled(nextButton);
-  cleanIt(answersContainer); // Clear previous answers
+  console.groupCollapsed("randomQuestion()");
+  setNodeDisabled({
+    node: nextButton,
+    isDisabled : true,
+    changeItFast : true,
+  });
+
+  cleanIt({node: answersContainer}); // Clear previous answers
 
   // Generate a random question index
   currentQuestionIndex = random(0, (shuffledQuestions.length-1));
@@ -13,6 +19,7 @@ function randomQuestion() {
 
   // Display the answers
   tempAnswersArray.forEach((answer, index) => {
+    console.groupCollapsed("Now constructing an answer button.");
     // Refer this HTML structure
     // <div class="answer-container ans-a">
     //    <div class="answer-alphabet"><img src="assets/a.png" alt="A"></div>
@@ -71,16 +78,19 @@ function randomQuestion() {
 
     // HTML: add 'answer-container' to 'section-answers'
     answersContainer.append(tempAnswerContainer);
+    console.groupEnd();
   });
+  console.groupEnd();
 }
 
 function DisplayPagination() {
+  console.groupCollapsed("DisplayPagination()");
     // Clear previous pagination (if needed)
     
     /*
     paginationContainer.innerHTML = '';
     */
-    cleanIt(paginationContainer);
+    cleanIt({node: paginationContainer});
     
     // Display pagination
     for (let i = 1; i <= totalNumOfQuestion; i++) {
@@ -97,11 +107,14 @@ function DisplayPagination() {
         /*
         pagination.classList.add("active");
         */
-        addClass(pagination, "active");
+        addClass({
+          element: pagination, 
+          classNames: "active"});
       }
       paginationContainer.append(pagination);
     }
     currentQuestionNo++;
+    console.groupEnd();
 }
 
 function handleAnswerClick(event) {
@@ -123,6 +136,7 @@ function handleAnswerClick(event) {
     const allButtons = document.querySelectorAll(".answer-container");
     for (let button of allButtons) {
       //button.disabled = true;
+      
       /*
       button.classList.add("disabled");
       */
@@ -130,10 +144,17 @@ function handleAnswerClick(event) {
     }
     
     // Simulate re-enabling the button after 0.3 seconds
+    /*
     setTimeout(() => {
         nextButton.disabled = false;
         nextButton.classList.remove("disabled");
     }, 300);
+    */
+    setNodeDisabled({
+      node: nextButton,
+      isDisabled : false,
+      changeItFast : false,
+    });
     
     nextButton.addEventListener("click", nextButtonClick);
     // Show random correct message drawn from `correctMessages` array
