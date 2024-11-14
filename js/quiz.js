@@ -1,12 +1,6 @@
 function randomQuestion() {
-  // Simulate disabling the button after 0.3 seconds 
-  // and add `disabled` class
-  setTimeout(() => {
-    nextButton.disabled = true;
-    nextButton.classList.add("disabled");
-  }, 300);
-  // Clear previous answers
-  answersContainer.innerHTML = '';
+  makeItDisabled(nextButton);
+  cleanIt(answersContainer); // Clear previous answers
 
   // Generate a random question index
   currentQuestionIndex = random(0, (shuffledQuestions.length-1));
@@ -24,18 +18,44 @@ function randomQuestion() {
     //    <div class="answer-alphabet"><img src="assets/a.png" alt="A"></div>
     //    <div class="answer-text">aaaaa</div>
     //  </div>
+
+    /*
     const tempAnswerContainer = document.createElement("div");
     tempAnswerContainer.classList.add("answer-container", answerClassList[index]);
-
+    addClass(tempAnswerContainer, "answer-container", answerClassList[index]);
+    */
+    const tempAnswerContainer = buildNode({
+                                  element: "div", 
+                                  classNames: ["answer-container", answerClassList[index]],
+                                });
+    /*
     const tempAnswerAlphabet = document.createElement("div");
     tempAnswerAlphabet.setAttribute("class", "answer-alphabet");
+    addClass(tempAnswerAlphabet, "answer-alphabet");
+    */
+    const tempAnswerAlphabet = buildNode({
+                                element : "div",
+                                classNames: ["answer-alphabet"],
+                              });
 
+    /*
     const tempAlphabetImg =  document.createElement("img");
+    */
+    const tempAlphabetImg =  buildNode({
+                              element : "img",
+                            });
     tempAlphabetImg.src = alphabetImg[index];
     tempAlphabetImg.alt = alphabetAlt[index];
 
+    /*
     const tempAnswerText = document.createElement("div");
     tempAnswerText.setAttribute("class", "answer-text");
+    */
+   
+    const tempAnswerText = buildNode({
+                            element : "div",
+                            classNames : ["answer-text"],
+                          });
 
     // JS: assign answer
     tempAnswerText.textContent =  answer;
@@ -56,14 +76,28 @@ function randomQuestion() {
 
 function DisplayPagination() {
     // Clear previous pagination (if needed)
+    
+    /*
     paginationContainer.innerHTML = '';
+    */
+    cleanIt(paginationContainer);
+    
     // Display pagination
     for (let i = 1; i <= totalNumOfQuestion; i++) {
+      /*
       const pagination = document.createElement("div");
       pagination.setAttribute("class", "pagination");
+      */
+      const pagination =  buildNode({
+                            element : "div",
+                            classNames: ["pagination"],
+                          });
       // Add 'active' class to show where we are right now with the pagination
       if (i === currentQuestionNo) {
+        /*
         pagination.classList.add("active");
+        */
+        addClass(pagination, "active");
       }
       paginationContainer.append(pagination);
     }
@@ -79,13 +113,20 @@ function handleAnswerClick(event) {
 
   if (selectedAnswer === currentQuestionSet.correctAnswer) {
     // Adds the `correct` class to the button that was clicked
+    
+    /*
     event.target.classList.add("correct");
+    */
+    addClass(event.target.classList, "correct");
 
     // Disable all buttons
     const allButtons = document.querySelectorAll(".answer-container");
     for (let button of allButtons) {
       //button.disabled = true;
+      /*
       button.classList.add("disabled");
+      */
+      addClass(button.classList, "disabled");
     }
     
     // Simulate re-enabling the button after 0.3 seconds
