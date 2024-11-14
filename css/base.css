@@ -3,9 +3,11 @@
 html {
   --body-teen-background-fallback: #FBC8D4;
   --body-teen-background-deg: 360deg;
-  --body-teen-background-gradient-1: #9795F0;
+  /*--body-teen-background-gradient-1: #9795F0;*/
+  --body-teen-background-gradient-1: #222222;
   --body-teen-background-gradient-1-stop: 0%;
-  --body-teen-background-gradient-2: #FBC8D4;
+  /*--body-teen-background-gradient-2: #FBC8D4;*/
+  --body-teen-background-gradient-2: #222222;
   --body-teen-background-gradient-2-stop: 88.5%;
 
   --main-font: "Poppins", sans-serif;
@@ -18,9 +20,11 @@ html {
 
   --main-container-everlasting-fallback: #FDFCFB;
   --main-container-everlasting-deg: 119.06deg;
-  --main-container-everlasting-grdient-1: #FDFCFB;
+  /*--main-container-everlasting-grdient-1: #FDFCFB;*/
+  --main-container-everlasting-grdient-1: #515151;
   --main-container-everlasting-grdient-1-stop: 0%;
-  --main-container-everlasting-grdient-2: #E2D1C3;
+  /*--main-container-everlasting-grdient-2: #E2D1C3;*/
+  --main-container-everlasting-grdient-2: #515151;
   --main-container-everlasting-grdient-2-stop: 100%;
   
   --main-container-box-shadow: 8px 12px 2px rgba(0, 0, 0, 0.25);
