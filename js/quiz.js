@@ -23,7 +23,7 @@ function randomQuestion() {
     buildAnswerBtn(answer, index);
     console.groupEnd();
   });
-  
+
   console.groupEnd();
 }
 
@@ -39,13 +39,16 @@ function buildAnswerBtn(answer, index) {
                                 element: "div", 
                                 classNames: ["answer-container", answerClassList[index]],
                               });
+
   const tempAnswerAlphabet = buildNode({
                               element : "div",
                               classNames: ["answer-alphabet"],
                             });
+
   const tempAlphabetImg =  buildNode({
                             element : "img",
                           });
+
   tempAlphabetImg.src = alphabetImg[index];
   tempAlphabetImg.alt = alphabetAlt[index];
  
@@ -80,20 +83,27 @@ function DisplayPagination() {
     
     // Display pagination
     for (let i = 1; i <= totalNumOfQuestion; i++) {
-      const pagination =  buildNode({
-                            element: "div",
-                            classNames: ["pagination"],
-                          });
-      // Add 'active' class to show where we are right now with the pagination
-      if (i === currentQuestionNo) {
-        addClass({
-          element: pagination, 
-          classNames: "active"});
-      }
-      paginationContainer.append(pagination);
+      console.groupCollapsed("Building pagination: ", i);
+      buildPagination(i);
+      console.groupEnd();
     }
     currentQuestionNo++;
     console.groupEnd();
+}
+
+function buildPagination(i) {
+  const pagination = buildNode({
+    element: "div",
+    classNames: ["pagination"],
+  });
+  // Add 'active' class to show where we are right now with the pagination
+  if (i === currentQuestionNo) {
+    addClass({
+      element: pagination,
+      classNames: "active"
+    });
+  }
+  paginationContainer.append(pagination);
 }
 
 function handleAnswerClick(event) {
