@@ -29,9 +29,27 @@ function setNodeDisabled({ node, isDisabled, changeItFast }) {
 }
 
 // to clean HTML node
-function cleanIt({node}) {
-  node.innerHTML = '';
+function cleanNode({ node, isDeepClean = false }) {
+  console.groupCollapsed("cleanNode()");
+
+  if (!(node instanceof HTMLElement)) {
+    console.warn("Provided node is not a valid HTML element.");
+    console.groupEnd();
+    return false; // Explicit return to signal invalid input
+  }
+
+  if (isDeepClean) {
+    console.info("Performing deep cleaning.");
+    node.innerHTML = ''; // Removes all child elements and their listeners
+  } else {
+    console.info("Performing light cleaning.");
+    node.textContent = ''; // Removes only text content
+  }
+
+  console.groupEnd();
+  return true; // Signal successful operation
 }
+
 
 // to build HTML element and add classes (if any)
 function buildNode({element, classNames = []}) {
