@@ -50,7 +50,6 @@ function cleanNode({ node, isDeepClean = false }) {
   return true; // Signal successful operation
 }
 
-
 // to build HTML element and add classes (if any)
 function buildNode({element, classNames = []}) {
   console.groupCollapsed("buildNode()");
@@ -62,6 +61,22 @@ function buildNode({element, classNames = []}) {
   
   console.groupEnd();
   return BLK;
+}
+
+// to add textContent content at the desired HTML element
+function addTextContent({node, content}) {
+  console.groupCollapsed("addTextContent()");
+
+  if (!(node instanceof HTMLElement)) {
+    console.warn("Provided node is not a valid HTML element.");
+    console.groupEnd();
+    return false; // Explicit return to signal invalid input
+  }
+  console.info("node: ", node);
+  console.info("content: ", content);
+  node.textContent = content;
+
+  console.groupEnd();
 }
 
 // to add class to a HTML node
