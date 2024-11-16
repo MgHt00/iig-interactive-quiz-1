@@ -6,7 +6,10 @@ function randomQuestion() {
     changeItFast: true,
   });
 
-  cleanIt({node: answersContainer}); // Clear previous answers
+  cleanNode({
+    node: answersContainer,
+    isDeepClean: true,
+  }); // Clear previous answers
 
   // Generate a random question index
   currentQuestionIndex = random(0, (shuffledQuestions.length-1));
@@ -82,7 +85,11 @@ function controlManager() {
 function DisplayPagination() {
   console.groupCollapsed("DisplayPagination()");
     
-    cleanIt({node: paginationContainer}); // Clear previous pagination (if needed)
+    cleanNode({ // Clear previous pagination (if needed)
+      node: paginationContainer,
+      isDeepClean: true,
+    }); 
+
     for (let i = 1; i <= totalNumOfQuestion; i++) { // Display pagination
       console.groupCollapsed("Building pagination: ", i);
       buildPagination(i); // calling sub-function
@@ -186,7 +193,10 @@ function handleAnswerClick(event) {
 }
 
 function nextButtonClick(event) {
-  messageContainer.textContent = "";
+  cleanNode({
+    node: messageContainer,
+    isDeepClean: false,
+  });
   messageContainer.className = "";
   // reset no. of tries to 1
   console.log(`_________`);
