@@ -74,93 +74,115 @@ function buildAnswerBtn(answer, index) {
   console.groupEnd();
 
 }
+/*
+function controlManager() {
 
+}
+*/
 function DisplayPagination() {
   console.groupCollapsed("DisplayPagination()");
-    // Clear previous pagination (if needed)
     
-    cleanIt({node: paginationContainer});
-    
-    // Display pagination
-    for (let i = 1; i <= totalNumOfQuestion; i++) {
+    cleanIt({node: paginationContainer}); // Clear previous pagination (if needed)
+    for (let i = 1; i <= totalNumOfQuestion; i++) { // Display pagination
       console.groupCollapsed("Building pagination: ", i);
-      buildPagination(i);
+      buildPagination(i); // calling sub-function
       console.groupEnd();
     }
     currentQuestionNo++;
     console.groupEnd();
+    
+    function buildPagination(i) {
+      const pagination = buildNode({
+        element: "div",
+        classNames: ["pagination"],
+      });
+      // Add 'active' class to show where we are right now with the pagination
+      if (i === currentQuestionNo) {
+        addClass({
+          element: pagination,
+          classNames: "active"
+        });
+      }
+      paginationContainer.append(pagination);
+    }
 }
 
-function buildPagination(i) {
-  const pagination = buildNode({
-    element: "div",
-    classNames: ["pagination"],
-  });
-  // Add 'active' class to show where we are right now with the pagination
-  if (i === currentQuestionNo) {
+function disableAllBtns() {
+  console.groupCollapsed("disableAllBtns()");
+
+  const allButtons = document.querySelectorAll(".answer-container");
+  for (let button of allButtons) {
     addClass({
-      element: pagination,
-      classNames: "active"
+      element: button,
+      classNames: "disabled",
     });
   }
-  paginationContainer.append(pagination);
+
+  console.groupEnd();
 }
 
+function answerIsCorrect(event) {
+  addClass({ // Adds the `correct` class to the button that was clicked
+    element: event.target,
+    classNames: "correct",
+  });
+  
+  disableAllBtns(); // Disable all buttons
+  setNodeDisabled({ // Simulate re-enabling the NEXT button after 0.3 seconds
+    node: nextButton,
+    isDisabled: false,
+    changeItFast: true,
+  });
+  
+  // Show random correct message drawn from `correctMessages` array
+  messageContainer.textContent = correctMessages[random(0, correctMessages.length-1)];    
+  addClass({
+    element: messageContainer,
+    classNames: "correct",
+  });
+}
+
+function ansewrIsNotCorrect(event) {
+  // Adds the `incorrect` class to the button that was clicked
+  addClass({
+    element: event.target,
+    classNames: "disabled",
+  });
+  messageContainer.textContent = wrongMessages[random(0, wrongMessages.length-1)];
+  addClass({
+    element: messageContainer,
+    classNames: "incorrect",
+  });
+  noOfTries++;
+  console.info(`Incorrect answser.`);
+  console.info(`noOfTries is increased as: ${noOfTries}`);
+}
+
+/*
+function listenerManager() {
+
+}
+*/
 function handleAnswerClick(event) {
+  console.groupCollapsed("handleAnswerClick()");
+
   const selectedAnswer = event.target.textContent;
-  console.log(`Previous score is ${score}`);
+  console.info(`Previous score is ${score}`);
 
   // Assign currently showing question and answer set to a temp object.
   const currentQuestionSet = shuffledQuestions[currentQuestionIndex];
 
+  // If the answer is correct
   if (selectedAnswer === currentQuestionSet.correctAnswer) {
-    // Adds the `correct` class to the button that was clicked
-    
-    /*
-    event.target.classList.add("correct");
-    */
-    addClass(event.target.classList, "correct");
-
-    // Disable all buttons
-    const allButtons = document.querySelectorAll(".answer-container");
-    for (let button of allButtons) {
-      //button.disabled = true;
-      
-      /*
-      button.classList.add("disabled");
-      */
-      addClass(button, "disabled");
-    }
-    
-    // Simulate re-enabling the button after 0.3 seconds
-    /*
-    setTimeout(() => {
-        nextButton.disabled = false;
-        nextButton.classList.remove("disabled");
-    }, 300);
-    */
-    setNodeDisabled({
-      node: nextButton,
-      isDisabled: false,
-      changeItFast: false,
-    });
-    
-    nextButton.addEventListener("click", nextButtonClick);
-    // Show random correct message drawn from `correctMessages` array
-    messageContainer.textContent = correctMessages[random(0, correctMessages.length-1)];
-    //messageContainer.classList.add("correct");
-    addClass(messageContainer, "correct");
-  } else {
-    // Adds the `incorrect` class to the button that was clicked
-    event.target.classList.add("disabled");
-    //addClass(event.target, "disabled");
-    messageContainer.textContent = wrongMessages[random(0, wrongMessages.length-1)];
-    messageContainer.classList.add("incorrect");
-    noOfTries++;
-    console.log(`Incorrect answser.`);
-    console.log(`noOfTries is increased as: ${noOfTries}`);
+    answerIsCorrect(event);
+  } 
+  // If the answer is NOT correct
+  else {
+    ansewrIsNotCorrect(event);
   }
   score = calScore();
+
+  console.groupEnd();
 }
 
 function nextButtonClick(event) {
@@ -263,3 +285,5 @@ fetch('assets/data/questions.json')
 
 // Disable `nextButton` at the start
 nextButton.disabled = true;
+// Add event listener to Next button
+nextButton.addEventListener("click", nextButtonClick);
