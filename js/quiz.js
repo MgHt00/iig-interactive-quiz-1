@@ -19,49 +19,57 @@ function randomQuestion() {
 
   // Display the answers
   tempAnswersArray.forEach((answer, index) => {
-    console.groupCollapsed("Now constructing an answer button.");
-    // Refer this HTML structure
-    // <div class="answer-container ans-a">
-    //    <div class="answer-alphabet"><img src="assets/a.png" alt="A"></div>
-    //    <div class="answer-text">aaaaa</div>
-    //  </div>
-
-    const tempAnswerContainer = buildNode({
-                                  element: "div", 
-                                  classNames: ["answer-container", answerClassList[index]],
-                                });
-    const tempAnswerAlphabet = buildNode({
-                                element : "div",
-                                classNames: ["answer-alphabet"],
-                              });
-    const tempAlphabetImg =  buildNode({
-                              element : "img",
-                            });
-    tempAlphabetImg.src = alphabetImg[index];
-    tempAlphabetImg.alt = alphabetAlt[index];
-   
-    const tempAnswerText = buildNode({
-                            element : "div",
-                            classNames : ["answer-text"],
-                          });
-
-    // JS: assign answer
-    tempAnswerText.textContent =  answer;
-
-    // HTML: add '<img>' to 'answer-alphabet'
-    tempAnswerAlphabet.append(tempAlphabetImg);
-
-    // HTML: add two divs 'answer-alphabet' and 'answer-text' to 'answer-container'
-    tempAnswerContainer.append(tempAnswerAlphabet);
-    tempAnswerContainer.append(tempAnswerText);
-
-    tempAnswerContainer.addEventListener("click", handleAnswerClick);
-
-    // HTML: add 'answer-container' to 'section-answers'
-    answersContainer.append(tempAnswerContainer);
+    console.groupCollapsed("Building answer btn: ", index);
+    buildAnswerBtn(answer, index);
     console.groupEnd();
   });
+  
   console.groupEnd();
+}
+
+function buildAnswerBtn(answer, index) {
+  console.groupCollapsed("buildAnswerBtn()");
+  // Refer to this HTML structure
+  // <div class="answer-container ans-a">
+  //    <div class="answer-alphabet"><img src="assets/a.png" alt="A"></div>
+  //    <div class="answer-text">aaaaa</div>
+  //  </div>
+
+  const tempAnswerContainer = buildNode({
+                                element: "div", 
+                                classNames: ["answer-container", answerClassList[index]],
+                              });
+  const tempAnswerAlphabet = buildNode({
+                              element : "div",
+                              classNames: ["answer-alphabet"],
+                            });
+  const tempAlphabetImg =  buildNode({
+                            element : "img",
+                          });
+  tempAlphabetImg.src = alphabetImg[index];
+  tempAlphabetImg.alt = alphabetAlt[index];
+ 
+  const tempAnswerText = buildNode({
+                          element : "div",
+                          classNames : ["answer-text"],
+                        });
+
+  // JS: assign answer
+  tempAnswerText.textContent =  answer;
+
+  // HTML: add '<img>' to 'answer-alphabet'
+  tempAnswerAlphabet.append(tempAlphabetImg);
+
+  // HTML: add two divs 'answer-alphabet' and 'answer-text' to 'answer-container'
+  tempAnswerContainer.append(tempAnswerAlphabet);
+  tempAnswerContainer.append(tempAnswerText);
+
+  tempAnswerContainer.addEventListener("click", handleAnswerClick);
+
+  // HTML: add 'answer-container' to 'section-answers'
+  answersContainer.append(tempAnswerContainer);
+  console.groupEnd();
+
 }
 
 function DisplayPagination() {

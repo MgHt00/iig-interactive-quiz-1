@@ -36,7 +36,7 @@ function cleanIt({node}) {
 // to build HTML element and add classes (if any)
 function buildNode({element, classNames = []}) {
   console.groupCollapsed("buildNode()");
-
+  console.log("Building Node: ", element);
   const BLK = document.createElement(element);
   
   // Add classes if provided
@@ -56,7 +56,7 @@ function addClass({ element, classNames = []} ) {
   }
 
   classNames.forEach(c => {
-    console.info("element:", element, "class: ", c);
+    console.info("Adding class: ", c);
     element.classList.add(c);
   });
 
