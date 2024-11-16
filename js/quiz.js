@@ -1,5 +1,6 @@
 function randomQuestion() {
   console.groupCollapsed("randomQuestion()");
+
   setNodeDisabled({
     node: nextButton,
     isDisabled: true,
@@ -15,7 +16,10 @@ function randomQuestion() {
   currentQuestionIndex = random(0, (shuffledQuestions.length-1));
 
   // Display the question
-  questionContainer.textContent = shuffledQuestions[currentQuestionIndex].question;
+  addTextContent({
+    node: questionContainer,
+    content: shuffledQuestions[currentQuestionIndex].question,
+  });
 
   // Copy `answers` array from `shuffledQuestions` to a temporary array
   let tempAnswersArray = [...shuffledQuestions[currentQuestionIndex].answers];
@@ -61,7 +65,10 @@ function buildAnswerBtn(answer, index) {
                         });
 
   // JS: assign answer
-  tempAnswerText.textContent =  answer;
+  addTextContent({
+    node: tempAnswerText,
+    content: answer,
+  });
 
   // HTML: add '<img>' to 'answer-alphabet'
   tempAnswerAlphabet.append(tempAlphabetImg);
@@ -142,7 +149,10 @@ function answerIsCorrect(event) {
   });
   
   // Show random correct message drawn from `correctMessages` array
-  messageContainer.textContent = correctMessages[random(0, correctMessages.length-1)];    
+  addTextContent({
+    node: messageContainer,
+    content: correctMessages[random(0, correctMessages.length-1)],
+  });    
   addClass({
     element: messageContainer,
     classNames: "correct",
@@ -155,7 +165,10 @@ function ansewrIsNotCorrect(event) {
     element: event.target,
     classNames: "disabled",
   });
-  messageContainer.textContent = wrongMessages[random(0, wrongMessages.length-1)];
+  addTextContent({
+    node: messageContainer,
+    content: wrongMessages[random(0, wrongMessages.length-1)],
+  });
   addClass({
     element: messageContainer,
     classNames: "incorrect",
