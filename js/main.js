@@ -5,6 +5,9 @@ function random(min, max) {
 // toggling the disabled state of a node with an optional delay
 function setNodeDisabled({ node, isDisabled, changeItFast }) {
   console.groupCollapsed("setNodeDisabled()");
+  
+  console.info("Node to change: ", node);
+  console.info("isDiabled :", isDisabled);
   console.info("Change it in fast mode:", changeItFast);
 
   const applyState = () => {

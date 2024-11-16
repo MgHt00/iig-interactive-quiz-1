@@ -2,8 +2,8 @@ function randomQuestion() {
   console.groupCollapsed("randomQuestion()");
   setNodeDisabled({
     node: nextButton,
-    isDisabled : true,
-    changeItFast : true,
+    isDisabled: true,
+    changeItFast: true,
   });
 
   cleanIt({node: answersContainer}); // Clear previous answers
@@ -26,38 +26,19 @@ function randomQuestion() {
     //    <div class="answer-text">aaaaa</div>
     //  </div>
 
-    /*
-    const tempAnswerContainer = document.createElement("div");
-    tempAnswerContainer.classList.add("answer-container", answerClassList[index]);
-    addClass(tempAnswerContainer, "answer-container", answerClassList[index]);
-    */
     const tempAnswerContainer = buildNode({
                                   element: "div", 
                                   classNames: ["answer-container", answerClassList[index]],
                                 });
-    /*
-    const tempAnswerAlphabet = document.createElement("div");
-    tempAnswerAlphabet.setAttribute("class", "answer-alphabet");
-    addClass(tempAnswerAlphabet, "answer-alphabet");
-    */
     const tempAnswerAlphabet = buildNode({
                                 element : "div",
                                 classNames: ["answer-alphabet"],
                               });
-
-    /*
-    const tempAlphabetImg =  document.createElement("img");
-    */
     const tempAlphabetImg =  buildNode({
                               element : "img",
                             });
     tempAlphabetImg.src = alphabetImg[index];
     tempAlphabetImg.alt = alphabetAlt[index];
-
-    /*
-    const tempAnswerText = document.createElement("div");
-    tempAnswerText.setAttribute("class", "answer-text");
-    */
    
     const tempAnswerText = buildNode({
                             element : "div",
@@ -87,26 +68,16 @@ function DisplayPagination() {
   console.groupCollapsed("DisplayPagination()");
     // Clear previous pagination (if needed)
     
-    /*
-    paginationContainer.innerHTML = '';
-    */
     cleanIt({node: paginationContainer});
     
     // Display pagination
     for (let i = 1; i <= totalNumOfQuestion; i++) {
-      /*
-      const pagination = document.createElement("div");
-      pagination.setAttribute("class", "pagination");
-      */
       const pagination =  buildNode({
-                            element : "div",
+                            element: "div",
                             classNames: ["pagination"],
                           });
       // Add 'active' class to show where we are right now with the pagination
       if (i === currentQuestionNo) {
-        /*
-        pagination.classList.add("active");
-        */
         addClass({
           element: pagination, 
           classNames: "active"});
@@ -140,7 +111,7 @@ function handleAnswerClick(event) {
       /*
       button.classList.add("disabled");
       */
-      addClass(button.classList, "disabled");
+      addClass(button, "disabled");
     }
     
     // Simulate re-enabling the button after 0.3 seconds
@@ -152,17 +123,19 @@ function handleAnswerClick(event) {
     */
     setNodeDisabled({
       node: nextButton,
-      isDisabled : false,
-      changeItFast : false,
+      isDisabled: false,
+      changeItFast: false,
     });
     
     nextButton.addEventListener("click", nextButtonClick);
     // Show random correct message drawn from `correctMessages` array
     messageContainer.textContent = correctMessages[random(0, correctMessages.length-1)];
-    messageContainer.classList.add("correct");
+    //messageContainer.classList.add("correct");
+    addClass(messageContainer, "correct");
   } else {
     // Adds the `incorrect` class to the button that was clicked
     event.target.classList.add("disabled");
+    //addClass(event.target, "disabled");
     messageContainer.textContent = wrongMessages[random(0, wrongMessages.length-1)];
     messageContainer.classList.add("incorrect");
     noOfTries++;
