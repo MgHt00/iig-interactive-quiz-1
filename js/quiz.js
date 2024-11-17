@@ -298,7 +298,7 @@ function finishSession() {
 
 function reloadSession() {
   console.groupCollapsed("reloadSession()");
-  
+
   // Clear header, previous question, answers, and pagination; then show the complete message
   removeClass({
     element: reloadContainer,
@@ -331,27 +331,33 @@ function calScore() {
   return score;
 }
 
-// Fetch questions from JSON file
-fetch('assets/data/questions.json')
-//  The fetch function returns a promise that resolves to the response object 
-//  representing the HTTP response.
-  .then(response => response.json())
-  //  The first .then method takes the response object returned by the fetch request  
-  //  and converts it to JSON using the json() method. This method also returns a promise 
-  //  that resolves to the JSON object.
-  .then(data => {
-    // The second .then method takes the JSON object (now stored in the data variable) 
-    // and assigns it to the questions variable.
-    questions = data;
-    // Copy questions array to shuffledQuestions
-    shuffledQuestions = [...questions]; 
-    // Calls initial functions
-    randomQuestion();
-    DisplayPagination();
-  })
-  .catch(error => console.error('Error loading questions:', error));
+async function loadJSON() {
+  console.groupCollapsed("loadJSON()");
+  // Fetch questions from JSON file
+  fetch('assets/data/questions.json')
+    //  The fetch function returns a promise that resolves to the response object 
+    //  representing the HTTP response.
+    .then(response => response.json())
+    //  The first .then method takes the response object returned by the fetch request  
+    //  and converts it to JSON using the json() method. This method also returns a promise 
+    //  that resolves to the JSON object.
+    .then(data => {
+      // The second .then method takes the JSON object (now stored in the data variable) 
+      // and assigns it to the questions variable.
+      questions = data;
+      // Copy questions array to shuffledQuestions
+      shuffledQuestions = [...questions];
+      // Calls initial functions
+      randomQuestion();
+      DisplayPagination();
+    })
+    .catch(error => console.error('Error loading questions:', error));
 
-// Disable `nextButton` at the start
-nextButton.disabled = true;
-// Add event listener to Next button
-nextButton.addEventListener("click", nextButtonClick);
+  console.groupEnd();
+}
+
+(function start() {
+  loadJSON();
+  nextButton.disabled = true; // Disable `nextButton` at the start
+  nextButton.addEventListener("click", nextButtonClick); // Add event listener to Next button
+})();
