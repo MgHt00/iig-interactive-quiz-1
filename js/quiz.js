@@ -228,22 +228,34 @@ function handleAnswerClick(event) {
 }
 
 function nextButtonClick(event) {
+  console.groupCollapsed("nextButtonClick()");
+
+  prepareForNewQuestion();
+  // spliceQuestion() is called, if there is still a question left in `shuffledQuestions`
+  if ((currentQuestionNo <= totalNumOfQuestion) && (shuffledQuestions.length !== 0)) {
+    spliceQuestion();
+  } else {
+    finishSession();
+  }
+  DisplayPagination();
+
+  console.groupEnd();
+}
+
+function prepareForNewQuestion() {
+  console.groupCollapsed("prepareForNewQuestion()");
+
   cleanNode({
     node: messageContainer,
     isDeepClean: false,
   });
-  messageContainer.className = "";
+  removeAllClass({element: messageContainer});
+
   // reset no. of tries to 1
-  console.log(`_________`);
-  console.log(`noOfTries is reset to 1.`);
   noOfTries = 1;
-  // spliceQuestion() is called, if there is still a question left in `shuffledQuestions`
-    if ((currentQuestionNo <= totalNumOfQuestion) && (shuffledQuestions.length !== 0)) {
-      spliceQuestion();
-    } else {
-      finishSession();
-    }
-    DisplayPagination();
+  console.info("noOfTries is reset.  Currently:", noOfTries);
+
+  console.groupEnd();
 }
 
 function spliceQuestion() {

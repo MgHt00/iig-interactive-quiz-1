@@ -96,3 +96,11 @@ function addClass({ element, classNames = []} ) {
   console.info("Styled element: ", element);
   console.groupEnd();
 }
+
+function removeAllClass({element}) {
+  console.groupCollapsed("removeClass()");
+  
+  element.classNames = "";
+
+  console.groupEnd();
+}
