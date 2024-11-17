@@ -181,7 +181,7 @@ function answerIsCorrect(event) {
   });
 }
 
-function ansewrIsNotCorrect(event) {
+function answerIsNotCorrect(event) {
   // Adds the `incorrect` class to the button that was clicked
   addClass({
     element: event.target,
@@ -220,7 +220,7 @@ function handleAnswerClick(event) {
   } 
   // If the answer is NOT correct
   else {
-    ansewrIsNotCorrect(event);
+    answerIsNotCorrect(event);
   }
   score = calScore();
 
