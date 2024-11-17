@@ -174,7 +174,11 @@ function answerIsCorrect(event) {
   addTextContent({
     node: messageContainer,
     content: fetchRandomMessage("correct"),
-  });    
+  });
+  
+  // Remove all classes of the messageContainer
+  removeAllClass({element: messageContainer});
+
   addClass({
     element: messageContainer,
     classNames: "correct",
@@ -191,6 +195,10 @@ function answerIsNotCorrect(event) {
     node: messageContainer,
     content: fetchRandomMessage("incorrect"),
   });
+
+  // Remove all classes of the messageContainer
+  removeAllClass({element: messageContainer});
+
   addClass({
     element: messageContainer,
     classNames: "incorrect",

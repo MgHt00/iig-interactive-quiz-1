@@ -100,7 +100,7 @@ function addClass({ element, classNames = []} ) {
 function removeAllClass({element}) {
   console.groupCollapsed("removeClass()");
   
-  element.classNames = "";
-
+  element.className = "";
+  console.info("After removing class:", element);
   console.groupEnd();
 }
