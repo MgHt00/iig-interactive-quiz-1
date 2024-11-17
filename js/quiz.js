@@ -1,3 +1,7 @@
+/*function contentManager() {
+
+}
+*/
 function randomQuestion() {
   console.groupCollapsed("randomQuestion()");
 
@@ -84,6 +88,24 @@ function buildAnswerBtn(answer, index) {
   console.groupEnd();
 
 }
+
+function fetchRandomMessage(status){
+  console.groupCollapsed("fetchRandomMessage()");
+  
+  let messageArray;
+  switch (status) {
+    case 'correct':
+      messageArray = correctMessages;
+      console.info("Case:", status," | Array: ", messageArray);
+      break;
+    case 'incorrect':
+      messageArray = wrongMessages;
+      console.info("Case:", status," | Array: ", messageArray);
+      break;
+  }
+  console.groupEnd();
+  return messageArray[random(0, messageArray.length-1)];
+}
 /*
 function controlManager() {
 
@@ -151,7 +173,7 @@ function answerIsCorrect(event) {
   // Show random correct message drawn from `correctMessages` array
   addTextContent({
     node: messageContainer,
-    content: correctMessages[random(0, correctMessages.length-1)],
+    content: fetchRandomMessage("correct"),
   });    
   addClass({
     element: messageContainer,
@@ -167,7 +189,7 @@ function ansewrIsNotCorrect(event) {
   });
   addTextContent({
     node: messageContainer,
-    content: wrongMessages[random(0, wrongMessages.length-1)],
+    content: fetchRandomMessage("incorrect"),
   });
   addClass({
     element: messageContainer,
