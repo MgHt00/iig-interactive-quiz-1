@@ -297,8 +297,13 @@ function finishSession() {
 }
 
 function reloadSession() {
+  console.groupCollapsed("reloadSession()");
+  
   // Clear header, previous question, answers, and pagination; then show the complete message
-  reloadContainer.classList.add("hide");
+  removeClass({
+    element: reloadContainer,
+    classNames: "hide",
+  });
   messageContainer.remove();
   headerContainer.remove();
   questionContainer.remove();
@@ -306,15 +311,13 @@ function reloadSession() {
   paginationContainer.remove();
   separatorContainer.remove();
   
-  //mainContainer.classList.add("finished");
-  //messageContainer.className = "";
-  //messageContainer.classList.add("finished");
-
   // Remove Next button from display
   if (nextButton) {
     nextButton.remove();
   }
   location.reload();
+
+  console.groupEnd();
 }
 
 function calScore() {

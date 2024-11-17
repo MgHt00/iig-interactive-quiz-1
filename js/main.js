@@ -97,8 +97,24 @@ function addClass({ element, classNames = []} ) {
   console.groupEnd();
 }
 
-function removeAllClass({element}) {
+function removeClass({element, classNames = []}) {
   console.groupCollapsed("removeClass()");
+
+  if(!Array.isArray(classNames)) {
+    classNames = [classNames]
+  }
+  
+  classNames.forEach(c => {
+    console.info("Removing class:", c);
+    element.classList.remove(c);
+  });
+
+  console.info("Completed element:", element);
+  console.groupEnd();
+}
+
+function removeAllClass({element}) {
+  console.groupCollapsed("removeAllClass()");
   
   element.className = "";
   console.info("After removing class:", element);
