@@ -1,7 +1,38 @@
+(function start() {
+  loadJSON();
+  nextButton.disabled = true; // Disable `nextButton` at the start
+  nextButton.addEventListener("click", nextButtonClick); // Add event listener to Next button
+})();
+
 /*function contentManager() {
 
 }
 */
+async function loadJSON() {
+  console.groupCollapsed("loadJSON()");
+  // Fetch questions from JSON file
+  fetch('assets/data/questions.json')
+    //  The fetch function returns a promise that resolves to the response object 
+    //  representing the HTTP response.
+    .then(response => response.json())
+    //  The first .then method takes the response object returned by the fetch request  
+    //  and converts it to JSON using the json() method. This method also returns a promise 
+    //  that resolves to the JSON object.
+    .then(data => {
+      // The second .then method takes the JSON object (now stored in the data variable) 
+      // and assigns it to the questions variable.
+      questions = data;
+      // Copy questions array to shuffledQuestions
+      shuffledQuestions = [...questions];
+      // Calls initial functions
+      randomQuestion();
+      DisplayPagination();
+    })
+    .catch(error => console.error('Error loading questions:', error));
+
+  console.groupEnd();
+}
+
 function randomQuestion() {
   console.groupCollapsed("randomQuestion()");
 
@@ -106,8 +137,8 @@ function fetchRandomMessage(status){
   console.groupEnd();
   return messageArray[random(0, messageArray.length-1)];
 }
-/*
-function controlManager() {
+
+/*function controlManager() {
 
 }
 */
@@ -153,6 +184,32 @@ function disableAllBtns() {
       classNames: "disabled",
     });
   }
+
+  console.groupEnd();
+}
+
+/*function listenerManager() {
+
+}
+*/
+function handleAnswerClick(event) {
+  console.groupCollapsed("handleAnswerClick()");
+
+  const selectedAnswer = event.target.textContent;
+  console.info(`Previous score is ${score}`);
+
+  // Assign currently showing question and answer set to a temp object.
+  const currentQuestionSet = shuffledQuestions[currentQuestionIndex];
+
+  // If the answer is correct
+  if (selectedAnswer === currentQuestionSet.correctAnswer) {
+    answerIsCorrect(event);
+  } 
+  // If the answer is NOT correct
+  else {
+    answerIsNotCorrect(event);
+  }
+  score = calScore();
 
   console.groupEnd();
 }
@@ -206,33 +263,6 @@ function answerIsNotCorrect(event) {
   noOfTries++;
   console.info(`Incorrect answser.`);
   console.info(`noOfTries is increased as: ${noOfTries}`);
-}
-
-/*
-function listenerManager() {
-
-}
-*/
-function handleAnswerClick(event) {
-  console.groupCollapsed("handleAnswerClick()");
-
-  const selectedAnswer = event.target.textContent;
-  console.info(`Previous score is ${score}`);
-
-  // Assign currently showing question and answer set to a temp object.
-  const currentQuestionSet = shuffledQuestions[currentQuestionIndex];
-
-  // If the answer is correct
-  if (selectedAnswer === currentQuestionSet.correctAnswer) {
-    answerIsCorrect(event);
-  } 
-  // If the answer is NOT correct
-  else {
-    answerIsNotCorrect(event);
-  }
-  score = calScore();
-
-  console.groupEnd();
 }
 
 function nextButtonClick(event) {
@@ -330,34 +360,3 @@ function calScore() {
   console.log(`Updated score is: ${score}`);
   return score;
 }
-
-async function loadJSON() {
-  console.groupCollapsed("loadJSON()");
-  // Fetch questions from JSON file
-  fetch('assets/data/questions.json')
-    //  The fetch function returns a promise that resolves to the response object 
-    //  representing the HTTP response.
-    .then(response => response.json())
-    //  The first .then method takes the response object returned by the fetch request  
-    //  and converts it to JSON using the json() method. This method also returns a promise 
-    //  that resolves to the JSON object.
-    .then(data => {
-      // The second .then method takes the JSON object (now stored in the data variable) 
-      // and assigns it to the questions variable.
-      questions = data;
-      // Copy questions array to shuffledQuestions
-      shuffledQuestions = [...questions];
-      // Calls initial functions
-      randomQuestion();
-      DisplayPagination();
-    })
-    .catch(error => console.error('Error loading questions:', error));
-
-  console.groupEnd();
-}
-
-(function start() {
-  loadJSON();
-  nextButton.disabled = true; // Disable `nextButton` at the start
-  nextButton.addEventListener("click", nextButtonClick); // Add event listener to Next button
-})();

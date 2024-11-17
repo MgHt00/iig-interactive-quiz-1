@@ -1,8 +1,9 @@
+// To generate a random number
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// toggling the disabled state of a node with an optional delay
+// Toggling the disabled state of a node with an optional delay
 function setNodeDisabled({ node, isDisabled, changeItFast }) {
   console.groupCollapsed("setNodeDisabled()");
   
@@ -28,7 +29,7 @@ function setNodeDisabled({ node, isDisabled, changeItFast }) {
   console.groupEnd();
 }
 
-// to clean HTML node
+// To clean HTML node
 function cleanNode({ node, isDeepClean = false }) {
   console.groupCollapsed("cleanNode()");
 
@@ -50,7 +51,7 @@ function cleanNode({ node, isDeepClean = false }) {
   return true; // Signal successful operation
 }
 
-// to build HTML element and add classes (if any)
+// To build HTML element and add classes (if any)
 function buildNode({element, classNames = []}) {
   console.groupCollapsed("buildNode()");
   console.log("Building Node: ", element);
@@ -63,7 +64,7 @@ function buildNode({element, classNames = []}) {
   return BLK;
 }
 
-// to add textContent content at the desired HTML element
+// To add textContent content at the desired HTML element
 function addTextContent({node, content}) {
   console.groupCollapsed("addTextContent()");
 
@@ -79,7 +80,7 @@ function addTextContent({node, content}) {
   console.groupEnd();
 }
 
-// to add class to a HTML node
+// To add class to a HTML node
 function addClass({ element, classNames = []} ) {
   console.groupCollapsed("addClass()");
 
@@ -97,6 +98,7 @@ function addClass({ element, classNames = []} ) {
   console.groupEnd();
 }
 
+// To remove specifed classes from the element
 function removeClass({element, classNames = []}) {
   console.groupCollapsed("removeClass()");
 
@@ -113,6 +115,7 @@ function removeClass({element, classNames = []}) {
   console.groupEnd();
 }
 
+// To remove ALL classes
 function removeAllClass({element}) {
   console.groupCollapsed("removeAllClass()");
   
