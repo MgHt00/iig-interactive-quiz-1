@@ -6,7 +6,7 @@ const listenerMgr = listenerManager();
 (function initialize() {
   contentMgr.start();
   global.nextButton.disabled = true; // Disable `global.nextButton` at the start
-  global.nextButton.addEventListener("click", listenerMgr.listenerMgr); // Add event listener to Next button
+  global.nextButton.addEventListener("click", listenerMgr.nextButtonClick); // Add event listener to Next button
 })();
 
 function contentManager() {
@@ -272,7 +272,7 @@ function listenerManager() {
       classNames: "correct",
     });
     
-    disableAllBtns(); // Disable all buttons
+    controlMgr.disableAllBtns(); // Disable all buttons
     global.setNodeDisabled({ // Simulate re-enabling the NEXT button after 0.3 seconds
       node: global.nextButton,
       isDisabled: false,
@@ -315,10 +315,6 @@ function listenerManager() {
     noOfTries++;
     console.info(`Incorrect answser.`);
     console.info(`noOfTries is increased as: ${noOfTries}`);
-  }
-
-  function disableAllBtns() {
-    
   }
   
   function nextButtonClick(event) {
