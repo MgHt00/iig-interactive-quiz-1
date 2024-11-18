@@ -35,21 +35,22 @@ function Global() {
   this.separatorContainer = document.querySelector("#section-separator");
   this.reloadContainer = document.querySelector("#section-reload");
 
-  this.totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
-  let currentQuestionIndex; // Index to match the question and the answers.
+  let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
   let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
-  let questions = []; // Data will be fetch from JSON
-  let shuffledQuestions = []; // To copy the questions array to manipulate without touching the original question array.
-
-  const correctMessages = ["Fantastic!", "Awesome!", "Brilliant!", "Great job!", "Excellent!", "Superb!", "Outstanding!"];
-  const wrongMessages = ["Almost there!", "Keep going!", "Nice effort!", "Keep practicing!", "Good try!"];
-
+  /*  
+    let questions = []; // Data will be fetch from JSON
+    let shuffledQuestions = []; // To copy the questions array to manipulate without touching the original question array.
+    let currentQuestionIndex; // Index to match the question and the answers.
+  */
+  /*const correctMessages = ["Fantastic!", "Awesome!", "Brilliant!", "Great job!", "Excellent!", "Superb!", "Outstanding!"];
+  const wrongMessages = ["Almost there!", "Keep going!", "Nice effort!", "Keep practicing!", "Good try!"];*/
+/*
   const answerClassList = ["ans-a", "ans-b", "ans-c", "ans-d"];
   const alphabetImg = ["assets/a.png", "assets/b.png", "assets/c.png", "assets/d.png"];
   const alphabetAlt = ["a", "b", "c", "d"];
-
-  let noOfTries = 1;
-  let score = 0;
+*/
+  /*let noOfTries = 1;
+  let score = 0;*/
 }
 
 Global.prototype = mainFunctions;

@@ -59,7 +59,7 @@ let mainFunctions = {
     const BLK = document.createElement(element);
 
     // Add classes if provided
-    addClass({ element: BLK, classNames });
+    this.addClass({ element: BLK, classNames });
 
     console.groupEnd();
     return BLK;
