@@ -24,31 +24,6 @@ function contentManager() {
     controlMgr.displayPagination();
   }
 
-  /*async function loadJSON() {
-    console.groupCollapsed("loadJSON()");
-    // Fetch questions from JSON file
-    fetch('assets/data/questions.json')
-      //  The fetch function returns a promise that resolves to the response object 
-      //  representing the HTTP response.
-      .then(response => response.json())
-      //  The first .then method takes the response object returned by the fetch request  
-      //  and converts it to JSON using the json() method. This method also returns a promise 
-      //  that resolves to the JSON object.
-      .then(data => {
-        // The second .then method takes the JSON object (now stored in the data variable) 
-        // and assigns it to the questions variable.
-        questions = data;
-        // Copy questions array to shuffledQuestionsArray
-        shuffledQuestionsArray = [...questions];
-        // Calls initial functions
-        console.log("question:", questions);
-        console.log("shuffledQuestionsArray:", shuffledQuestionsArray);
-        console.groupEnd();
-      })
-      .catch(error => console.error('Error loading questions:', error));
-    
-  }*/
-
   async function loadJSON() {
     console.groupCollapsed("loadJSON()");
     try {
@@ -73,10 +48,10 @@ function contentManager() {
       changeItFast: true,
     });
 
-    global.cleanNode({
+    global.cleanNode({ // Clear previous answers
       node: global.answersContainer,
       isDeepClean: true,
-    }); // Clear previous answers
+    }); 
 
     // Generate a global.random question index
     currentQuestionIndex = global.random(0, (shuffledQuestionsArray.length - 1));
@@ -103,7 +78,7 @@ function contentManager() {
 
   function buildAnswerBtn(answer, index) {
     console.groupCollapsed("buildAnswerBtn()");
-    // Refer to this HTML structure
+    // REFER to this HTML structure
     // <div class="answer-container ans-a">
     //    <div class="answer-alphabet"><img src="assets/a.png" alt="A"></div>
     //    <div class="answer-text">aaaaa</div>
@@ -154,7 +129,6 @@ function contentManager() {
 
   function spliceShuffledQuestionsArray() {
     console.groupCollapsed("spliceShuffledQuestionsArray()");
-    //contentMgr.shuffledQuestionsArray.splice(contentMgr.getCurrentQuestionIndex(), 1);
     shuffledQuestionsArray.splice(currentQuestionIndex, 1);
     console.info(`spliceShuffledQuestionsArray: ${shuffledQuestionsArray}`);
     console.groupEnd();
@@ -195,6 +169,7 @@ function controlManager() {
       currentQuestionNo++;
       console.groupEnd();
       
+      // sub-function 
       function buildPagination(i) {
         const pagination = global.buildNode({
           element: "div",
@@ -211,6 +186,7 @@ function controlManager() {
       }
   }
   
+  // To disable all answer btns when the correct answer is selected
   function disableAllBtns() {
     console.groupCollapsed("disableAllBtns()");
   
@@ -244,6 +220,7 @@ function listenerManager() {
   let noOfTries = 1;
   let score = 0;
 
+  // When the answer button is clicked
   function handleAnswerClick(event) {
     console.groupCollapsed("handleAnswerClick()");
   
@@ -332,32 +309,29 @@ function listenerManager() {
     console.groupCollapsed("nextButtonClick()");
   
     prepareForNewQuestion();
-    // spliceQuestion() is called, if there is still a question left in `shuffledQuestionsArray`
-    if (isWithinQuestionLimit() && isShuffledQuestionsArrayNotEmpty()) {
-      spliceQuestion();
+    if (isWithinQuestionLimit() && isShuffledQuestionsArrayNotEmpty()) { // calling sub-functions
+      spliceQuestion(); // spliceQuestion() is called, if there is still a question left in `shuffledQuestionsArray`
     } else {
       finishSession();
     }
     controlMgr.displayPagination();
+
+    // Sub-function #1
+    function isWithinQuestionLimit() {
+      const result = controlMgr.getCurrentQuestionNo() <= controlMgr.getTotalNumOfQuestion();
+      console.log(`isWithinQuestionLimit: ${result}`);
+      return result;
+    }
+  
+    // Sub-function #2
+    function isShuffledQuestionsArrayNotEmpty() {
+      const result = contentMgr.getShuffledQuestionsArray().length !== 0;
+      console.log(`isShuffledQuestionsArrayNotEmpty: ${result}`);
+      return result;
+    } 
   
     console.groupEnd();
   }
-
-  function isWithinQuestionLimit() {
-    console.groupCollapsed("isWithinQuestionLimit()");
-    const result = controlMgr.getCurrentQuestionNo() <= controlMgr.getTotalNumOfQuestion();
-    console.log(`isWithinQuestionLimit: ${result}`);
-    console.groupEnd();
-    return result;
-  }
-
-  function isShuffledQuestionsArrayNotEmpty() {
-    console.groupCollapsed("isShuffledQuestionsArrayNotEmpty()");
-    const result = contentMgr.getShuffledQuestionsArray().length !== 0;
-    console.log(`isShuffledQuestionsArrayNotEmpty: ${result}`);
-    console.groupEnd();
-    return result;
-  } 
   
   function prepareForNewQuestion() {
     console.groupCollapsed("prepareForNewQuestion()");
@@ -391,18 +365,15 @@ function listenerManager() {
     global.paginationContainer.remove();
     global.separatorContainer.remove();
 
-    //global.messageContainer.className = "";
     global.removeAllClass({
       element: global.messageContainer,
     });
 
-    //global.mainContainer.classList.add("finished");
     global.addClass({
       element: global.mainContainer,
       classNames: "finished",
     });
 
-    //global.messageContainer.classList.add("finished");
     global.addClass({
       element: global.messageContainer,
       classNames: "finished",
@@ -415,7 +386,6 @@ function listenerManager() {
       global.nextButton.remove();
     }
   
-    //global.reloadContainer.classList.remove("hide");
     global.removeClass({
       element: global.reloadContainer,
       classNames: "hide",
