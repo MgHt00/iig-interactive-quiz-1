@@ -152,15 +152,26 @@ function contentManager() {
 
   }
 
+  function spliceShuffledQuestionsArray() {
+    console.groupCollapsed("spliceShuffledQuestionsArray()");
+    //contentMgr.shuffledQuestionsArray.splice(contentMgr.getCurrentQuestionIndex(), 1);
+    shuffledQuestionsArray.splice(currentQuestionIndex, 1);
+    console.info(`spliceShuffledQuestionsArray: ${shuffledQuestionsArray}`);
+    console.groupEnd();
+  }
+  
   function getCurrentQuestionIndex() { return currentQuestionIndex; }
   function getShuffledQuestionsArray() { return shuffledQuestionsArray; }
+  function getShuffledQuestionsArrayLength() { return shuffledQuestionsArray.length; }
 
   return {
     start,
     loadJSON,
     randomQuestion,
+    spliceShuffledQuestionsArray,
     getCurrentQuestionIndex,
     getShuffledQuestionsArray,
+    getShuffledQuestionsArrayLength,
   }
 }
 
@@ -366,10 +377,10 @@ function listenerManager() {
   
   function spliceQuestion() {
     // Delete shown questions from `shuffleQuestions` array
-    contentMgr.shuffledQuestionsArray.splice(contentMgr.getCurrentQuestionIndex(), 1);
+    contentMgr.spliceShuffledQuestionsArray();
   
     // randomQestion() is called again, if there is still a question left after the splice()
-    contentMgr.shuffledQuestionsArray.length === 0 ? finishSession() : contentMgr.randomQuestion();
+    contentMgr.getShuffledQuestionsArrayLength() === 0 ? finishSession() : contentMgr.randomQuestion();
   }
   
   function finishSession() {
@@ -379,18 +390,37 @@ function listenerManager() {
     global.answersContainer.remove();
     global.paginationContainer.remove();
     global.separatorContainer.remove();
+
+    //global.messageContainer.className = "";
+    global.removeAllClass({
+      element: global.messageContainer,
+    });
+
+    //global.mainContainer.classList.add("finished");
+    global.addClass({
+      element: global.mainContainer,
+      classNames: "finished",
+    });
+
+    //global.messageContainer.classList.add("finished");
+    global.addClass({
+      element: global.messageContainer,
+      classNames: "finished",
+    });
     
-    global.mainContainer.classList.add("finished");
-    global.messageContainer.className = "";
-    global.messageContainer.classList.add("finished");
-    global.messageContainer.innerHTML = `Well done!<br>You've completed all the questions.<br><br>Your score: ${score} of ${totalNumOfQuestion}`;
+    global.messageContainer.innerHTML = `Well done!<br>You've completed all the questions.<br><br>Your score: ${score} of ${controlMgr.getTotalNumOfQuestion()}`;
   
     // Remove Next button from display
     if (global.nextButton) {
       global.nextButton.remove();
     }
   
-    global.reloadContainer.classList.remove("hide");
+    //global.reloadContainer.classList.remove("hide");
+    global.removeClass({
+      element: global.reloadContainer,
+      classNames: "hide",
+    });
+
     global.reloadContainer.addEventListener("click", reloadSession);
   }
   

@@ -128,6 +128,7 @@ let mainFunctions = {
     console.info("After removing class:", element);
     console.groupEnd();
   },
+
 }
 
 /*
