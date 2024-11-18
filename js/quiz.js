@@ -272,7 +272,7 @@ function listenerManager() {
       classNames: "correct",
     });
     
-    controlMgr.controlMgr(); // Disable all buttons
+    disableAllBtns(); // Disable all buttons
     global.setNodeDisabled({ // Simulate re-enabling the NEXT button after 0.3 seconds
       node: global.nextButton,
       isDisabled: false,
@@ -315,6 +315,10 @@ function listenerManager() {
     noOfTries++;
     console.info(`Incorrect answser.`);
     console.info(`noOfTries is increased as: ${noOfTries}`);
+  }
+
+  function disableAllBtns() {
+    
   }
   
   function nextButtonClick(event) {
