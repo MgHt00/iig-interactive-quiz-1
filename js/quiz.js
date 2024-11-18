@@ -152,20 +152,15 @@ function contentManager() {
 
   }
 
-  function getcurrentQuestionIndex() {
-    return currentQuestionIndex;
-  }
-
-  function getshuffledQuestionsArray() {
-    return shuffledQuestionsArray;
-  }
+  function getCurrentQuestionIndex() { return currentQuestionIndex; }
+  function getShuffledQuestionsArray() { return shuffledQuestionsArray; }
 
   return {
     start,
     loadJSON,
     randomQuestion,
-    getcurrentQuestionIndex,
-    getshuffledQuestionsArray,
+    getCurrentQuestionIndex,
+    getShuffledQuestionsArray,
   }
 }
 
@@ -219,9 +214,14 @@ function controlManager() {
     console.groupEnd();
   }
 
+  function getTotalNumOfQuestion() { return totalNumOfQuestion; }
+  function getCurrentQuestionNo() { return currentQuestionNo; }
+
   return {
     displayPagination,
     disableAllBtns,
+    getTotalNumOfQuestion,
+    getCurrentQuestionNo,
   }
 
 }
@@ -258,9 +258,9 @@ function listenerManager() {
   function fetchCurrentQuestionSet() {
     console.groupCollapsed("fetchCurrentQuestionSet()");
 
-    console.info("contentMgr.currentQuestionIndex:", contentMgr.getcurrentQuestionIndex());
-    let fetchedArray = contentMgr.getshuffledQuestionsArray();
-    let fetchedIndex = contentMgr.getcurrentQuestionIndex();
+    console.info("contentMgr.currentQuestionIndex:", contentMgr.getCurrentQuestionIndex());
+    let fetchedArray = contentMgr.getShuffledQuestionsArray();
+    let fetchedIndex = contentMgr.getCurrentQuestionIndex();
 
     console.groupEnd();
     return fetchedArray[fetchedIndex];
@@ -322,7 +322,7 @@ function listenerManager() {
   
     prepareForNewQuestion();
     // spliceQuestion() is called, if there is still a question left in `shuffledQuestionsArray`
-    if ((currentQuestionNo <= totalNumOfQuestion) && (contentMgr.shuffledQuestionsArray.length !== 0)) {
+    if (isWithinQuestionLimit() && isShuffledQuestionsArrayNotEmpty()) {
       spliceQuestion();
     } else {
       finishSession();
@@ -331,6 +331,22 @@ function listenerManager() {
   
     console.groupEnd();
   }
+
+  function isWithinQuestionLimit() {
+    console.groupCollapsed("isWithinQuestionLimit()");
+    const result = controlMgr.getCurrentQuestionNo() <= controlMgr.getTotalNumOfQuestion();
+    console.log(`isWithinQuestionLimit: ${result}`);
+    console.groupEnd();
+    return result;
+  }
+
+  function isShuffledQuestionsArrayNotEmpty() {
+    console.groupCollapsed("isShuffledQuestionsArrayNotEmpty()");
+    const result = contentMgr.getShuffledQuestionsArray().length !== 0;
+    console.log(`isShuffledQuestionsArrayNotEmpty: ${result}`);
+    console.groupEnd();
+    return result;
+  } 
   
   function prepareForNewQuestion() {
     console.groupCollapsed("prepareForNewQuestion()");
@@ -350,7 +366,7 @@ function listenerManager() {
   
   function spliceQuestion() {
     // Delete shown questions from `shuffleQuestions` array
-    contentMgr.shuffledQuestionsArray.splice(contentMgr.getcurrentQuestionIndex(), 1);
+    contentMgr.shuffledQuestionsArray.splice(contentMgr.getCurrentQuestionIndex(), 1);
   
     // randomQestion() is called again, if there is still a question left after the splice()
     contentMgr.shuffledQuestionsArray.length === 0 ? finishSession() : contentMgr.randomQuestion();
