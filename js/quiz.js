@@ -1,73 +1,116 @@
-let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
-const mainContainer = document.querySelector("#main-container");
-const headerContainer = document.querySelector("#header");
-const questionContainer = document.querySelector("#question");
-const answersContainer = document.querySelector("#section-answers");
-const paginationContainer = document.querySelector("#section-pagination");
-const messageContainer = document.querySelector("#message");
-const nextButton = document.querySelector("#section-next-btn");
-const separatorContainer = document.querySelector("#section-separator");
-const reloadContainer = document.querySelector("#section-reload");
-let currentQuestionIndex; // Index to match the question and the answers.
-let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
-let questions = []; // Data will be fetch from JSON
-let shuffledQuestions = []; // To copy the questions array to manipulate without touching the original question array.
+const global = new Global();
+const contentMgr = contentManager();
+const controlMgr = controlManager(); 
+const listenerMgr = listenerManager();
 
-const correctMessages = ["Fantastic!", "Awesome!", "Brilliant!", "Great job!", "Excellent!", "Superb!", "Outstanding!"];
-const wrongMessages = ["Almost there!", "Keep going!", "Nice effort!", "Keep practicing!", "Good try!"];
+(function initialize() {
+  contentMgr.start();
+  global.nextButton.disabled = true; // Disable `global.nextButton` at the start
+  global.nextButton.addEventListener("click", listenerMgr.nextButtonClick); // Add event listener to Next button
+})();
 
-const answerClassList = ["ans-a", "ans-b", "ans-c", "ans-d"];
-const alphabetImg = ["assets/a.png", "assets/b.png", "assets/c.png", "assets/d.png"];
-const alphabetAlt = ["a", "b", "c", "d"];
+function contentManager() {
+  let questions = []; // Data will be fetch from JSON
+  let shuffledQuestionsArray = []; // To copy the questions array to manipulate without touching the original question array.
+  let currentQuestionIndex; // Index to match the question and the answers.
 
-let noOfTries = 1;
-let score = 0;
+  const answerClassList = ["ans-a", "ans-b", "ans-c", "ans-d"];
+  const alphabetImg = ["assets/a.png", "assets/b.png", "assets/c.png", "assets/d.png"];
+  const alphabetAlt = ["a", "b", "c", "d"];
 
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+  async function start() {
+    await loadJSON();
+    randomQuestion();
+    controlMgr.displayPagination();
+  }
 
-function randomQuestion() {
-  // Simulate disabling the button after 0.3 seconds 
-  // and add `disabled` class
-  setTimeout(() => {
-    nextButton.disabled = true;
-    nextButton.classList.add("disabled");
-  }, 300);
-  // Clear previous answers
-  answersContainer.innerHTML = '';
+  async function loadJSON() {
+    console.groupCollapsed("loadJSON()");
+    try {
+      const response = await fetch('assets/data/questions.json'); // Fetch data using await
+      const data = await response.json(); // Convert to JSON using await
+      questions = data; // Assign the fetched data to questions
+      shuffledQuestionsArray = [...questions]; // Copy to shuffledQuestionsArray
+      console.log("questions:", questions);
+      console.log("shuffledQuestionsArray:", shuffledQuestionsArray);
+    } catch (error) {
+      console.error('Error loading questions:', error);
+    }
+    console.groupEnd();
+  }
 
-  // Generate a random question index
-  currentQuestionIndex = random(0, (shuffledQuestions.length-1));
+  function randomQuestion() {
+    console.groupCollapsed("randomQuestion()");
 
-  // Display the question
-  questionContainer.textContent = shuffledQuestions[currentQuestionIndex].question;
+    global.setNodeDisabled({
+      node: global.nextButton,
+      isDisabled: true,
+      changeItFast: true,
+    });
 
-  // Copy `answers` array from `shuffledQuestions` to a temporary array
-  let tempAnswersArray = [...shuffledQuestions[currentQuestionIndex].answers];
+    global.cleanNode({ // Clear previous answers
+      node: global.answersContainer,
+      isDeepClean: true,
+    }); 
 
-  // Display the answers
-  tempAnswersArray.forEach((answer, index) => {
-    // Refer this HTML structure
+    // Generate a global.random question index
+    currentQuestionIndex = global.random(0, (shuffledQuestionsArray.length - 1));
+    console.info("currentQuestionIndex:", currentQuestionIndex);
+
+    // Display the question
+    global.addTextContent({
+      node: global.questionContainer,
+      content: shuffledQuestionsArray[currentQuestionIndex].question,
+    });
+
+    // Copy `answers` array from `shuffledQuestionsArray` to a temporary array
+    let tempAnswersArray = [...shuffledQuestionsArray[currentQuestionIndex].answers];
+
+    // Display the answers
+    tempAnswersArray.forEach((answer, index) => {
+      console.groupCollapsed("Building answer btn: ", index);
+      buildAnswerBtn(answer, index);
+      console.groupEnd();
+    });
+
+    console.groupEnd();
+  }
+
+  function buildAnswerBtn(answer, index) {
+    console.groupCollapsed("buildAnswerBtn()");
+    // REFER to this HTML structure
     // <div class="answer-container ans-a">
     //    <div class="answer-alphabet"><img src="assets/a.png" alt="A"></div>
     //    <div class="answer-text">aaaaa</div>
     //  </div>
-    const tempAnswerContainer = document.createElement("div");
-    tempAnswerContainer.classList.add("answer-container", answerClassList[index]);
 
-    const tempAnswerAlphabet = document.createElement("div");
-    tempAnswerAlphabet.setAttribute("class", "answer-alphabet");
+    const tempAnswerContainer = global.buildNode({
+      element: "div",
+      classNames: ["answer-container", answerClassList[index]],
+    });
 
-    const tempAlphabetImg =  document.createElement("img");
+    const tempAnswerAlphabet = global.buildNode({
+      element: "div",
+      classNames: ["answer-alphabet"],
+    });
+
+    const tempAlphabetImg = global.buildNode({
+      element: "img",
+    });
+
     tempAlphabetImg.src = alphabetImg[index];
     tempAlphabetImg.alt = alphabetAlt[index];
 
-    const tempAnswerText = document.createElement("div");
-    tempAnswerText.setAttribute("class", "answer-text");
+    const tempAnswerText = global.buildNode({
+      element: "div",
+      classNames: ["answer-text"],
+    });
 
     // JS: assign answer
-    tempAnswerText.textContent =  answer;
+    global.addTextContent({
+      node: tempAnswerText,
+      content: answer,
+    });
 
     // HTML: add '<img>' to 'answer-alphabet'
     tempAnswerAlphabet.append(tempAlphabetImg);
@@ -76,166 +119,336 @@ function randomQuestion() {
     tempAnswerContainer.append(tempAnswerAlphabet);
     tempAnswerContainer.append(tempAnswerText);
 
-    tempAnswerContainer.addEventListener("click", handleAnswerClick);
+    tempAnswerContainer.addEventListener("click", listenerMgr.handleAnswerClick);
 
     // HTML: add 'answer-container' to 'section-answers'
-    answersContainer.append(tempAnswerContainer);
-  });
+    global.answersContainer.append(tempAnswerContainer);
+    console.groupEnd();
+
+  }
+
+  function spliceShuffledQuestionsArray() {
+    console.groupCollapsed("spliceShuffledQuestionsArray()");
+    shuffledQuestionsArray.splice(currentQuestionIndex, 1);
+    console.info(`spliceShuffledQuestionsArray: ${shuffledQuestionsArray}`);
+    console.groupEnd();
+  }
+  
+  function getCurrentQuestionIndex() { return currentQuestionIndex; }
+  function getShuffledQuestionsArray() { return shuffledQuestionsArray; }
+  function getShuffledQuestionsArrayLength() { return shuffledQuestionsArray.length; }
+
+  return {
+    start,
+    loadJSON,
+    randomQuestion,
+    spliceShuffledQuestionsArray,
+    getCurrentQuestionIndex,
+    getShuffledQuestionsArray,
+    getShuffledQuestionsArrayLength,
+  }
 }
 
-function DisplayPagination() {
-    // Clear previous pagination (if needed)
-    paginationContainer.innerHTML = '';
-    // Display pagination
-    for (let i = 1; i <= totalNumOfQuestion; i++) {
-      const pagination = document.createElement("div");
-      pagination.setAttribute("class", "pagination");
-      // Add 'active' class to show where we are right now with the pagination
-      if (i === currentQuestionNo) {
-        pagination.classList.add("active");
+function controlManager() {
+  let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
+  let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
+
+  function displayPagination() {
+    console.groupCollapsed("displayPagination()");
+      
+      global.cleanNode({ // Clear previous pagination (if needed)
+        node: global.paginationContainer,
+        isDeepClean: true,
+      }); 
+  
+      for (let i = 1; i <= totalNumOfQuestion; i++) { // Display pagination
+        console.groupCollapsed("Building pagination: ", i);
+        buildPagination(i); // calling sub-function
+        console.groupEnd();
       }
-      paginationContainer.append(pagination);
-    }
-    currentQuestionNo++;
-}
-
-function handleAnswerClick(event) {
-  const selectedAnswer = event.target.textContent;
-  console.log(`Previous score is ${score}`);
-
-  // Assign currently showing question and answer set to a temp object.
-  const currentQuestionSet = shuffledQuestions[currentQuestionIndex];
-
-  if (selectedAnswer === currentQuestionSet.correctAnswer) {
-    // Adds the `correct` class to the button that was clicked
-    event.target.classList.add("correct");
-
-    // Disable all buttons
+      currentQuestionNo++;
+      console.groupEnd();
+      
+      // sub-function 
+      function buildPagination(i) {
+        const pagination = global.buildNode({
+          element: "div",
+          classNames: ["pagination"],
+        });
+        // Add 'active' class to show where we are right now with the pagination
+        if (i === currentQuestionNo) {
+          global.addClass({
+            element: pagination,
+            classNames: "active"
+          });
+        }
+        global.paginationContainer.append(pagination);
+      }
+  }
+  
+  // To disable all answer btns when the correct answer is selected
+  function disableAllBtns() {
+    console.groupCollapsed("disableAllBtns()");
+  
     const allButtons = document.querySelectorAll(".answer-container");
     for (let button of allButtons) {
-      //button.disabled = true;
-      button.classList.add("disabled");
+      global.addClass({
+        element: button,
+        classNames: "disabled",
+      });
     }
-    
-    // Simulate re-enabling the button after 0.3 seconds
-    setTimeout(() => {
-        nextButton.disabled = false;
-        nextButton.classList.remove("disabled");
-    }, 300);
-    
-    nextButton.addEventListener("click", nextButtonClick);
-    // Show random correct message drawn from `correctMessages` array
-    messageContainer.textContent = correctMessages[random(0, correctMessages.length-1)];
-    messageContainer.classList.add("correct");
-  } else {
-    // Adds the `incorrect` class to the button that was clicked
-    event.target.classList.add("disabled");
-    messageContainer.textContent = wrongMessages[random(0, wrongMessages.length-1)];
-    messageContainer.classList.add("incorrect");
-    noOfTries++;
-    console.log(`Incorrect answser.`);
-    console.log(`noOfTries is increased as: ${noOfTries}`);
+  
+    console.groupEnd();
   }
-  score = calScore();
+
+  function getTotalNumOfQuestion() { return totalNumOfQuestion; }
+  function getCurrentQuestionNo() { return currentQuestionNo; }
+
+  return {
+    displayPagination,
+    disableAllBtns,
+    getTotalNumOfQuestion,
+    getCurrentQuestionNo,
+  }
+
 }
 
-function nextButtonClick(event) {
-  messageContainer.textContent = "";
-  messageContainer.className = "";
-  // reset no. of tries to 1
-  console.log(`_________`);
-  console.log(`noOfTries is reset to 1.`);
-  noOfTries = 1;
-  // spliceQuestion() is called, if there is still a question left in `shuffledQuestions`
-    if ((currentQuestionNo <= totalNumOfQuestion) && (shuffledQuestions.length !== 0)) {
-      spliceQuestion();
+function listenerManager() {
+  const correctMessages = ["Fantastic!", "Awesome!", "Brilliant!", "Great job!", "Excellent!", "Superb!", "Outstanding!"];
+  const wrongMessages = ["Almost there!", "Keep going!", "Nice effort!", "Keep practicing!", "Good try!"];
+
+  let noOfTries = 1;
+  let score = 0;
+
+  // When the answer button is clicked
+  function handleAnswerClick(event) {
+    console.groupCollapsed("handleAnswerClick()");
+  
+    const selectedAnswer = event.target.textContent;
+    console.info(`Previous score is ${score}`);
+    
+    const currentQuestionSet = fetchCurrentQuestionSet();
+  
+    // If the answer is correct
+    if (selectedAnswer === currentQuestionSet.correctAnswer) {
+      answerIsCorrect(event);
+    } 
+    // If the answer is NOT correct
+    else {
+      answerIsNotCorrect(event);
+    }
+    score = calScore();
+  
+    console.groupEnd();
+  }
+
+  // Assign currently showing question and answer set to a temp object.
+  function fetchCurrentQuestionSet() {
+    console.groupCollapsed("fetchCurrentQuestionSet()");
+
+    console.info("contentMgr.currentQuestionIndex:", contentMgr.getCurrentQuestionIndex());
+    let fetchedArray = contentMgr.getShuffledQuestionsArray();
+    let fetchedIndex = contentMgr.getCurrentQuestionIndex();
+
+    console.groupEnd();
+    return fetchedArray[fetchedIndex];
+  }
+  
+  function answerIsCorrect(event) {
+    global.addClass({ // Adds the `correct` class to the button that was clicked
+      element: event.target,
+      classNames: "correct",
+    });
+    
+    controlMgr.disableAllBtns(); // Disable all buttons
+    global.setNodeDisabled({ // Simulate re-enabling the NEXT button after 0.3 seconds
+      node: global.nextButton,
+      isDisabled: false,
+      changeItFast: true,
+    });
+    
+    // Show global.random correct message drawn from `correctMessages` array
+    global.addTextContent({
+      node: global.messageContainer,
+      content: fetchRandomMessage("correct"),
+    });
+    
+    // Remove all classes of the global.messageContainer
+    global.removeAllClass({element: global.messageContainer});
+  
+    global.addClass({
+      element: global.messageContainer,
+      classNames: "correct",
+    });
+  }
+  
+  function answerIsNotCorrect(event) {
+    // Adds the `incorrect` class to the button that was clicked
+    global.addClass({
+      element: event.target,
+      classNames: "disabled",
+    });
+    global.addTextContent({
+      node: global.messageContainer,
+      content: fetchRandomMessage("incorrect"),
+    });
+  
+    // Remove all classes of the global.messageContainer
+    global.removeAllClass({element: global.messageContainer});
+  
+    global.addClass({
+      element: global.messageContainer,
+      classNames: "incorrect",
+    });
+    noOfTries++;
+    console.info(`Incorrect answser.`);
+    console.info(`noOfTries is increased as: ${noOfTries}`);
+  }
+  
+  function nextButtonClick(event) {
+    console.groupCollapsed("nextButtonClick()");
+  
+    prepareForNewQuestion();
+    if (isWithinQuestionLimit() && isShuffledQuestionsArrayNotEmpty()) { // calling sub-functions
+      spliceQuestion(); // spliceQuestion() is called, if there is still a question left in `shuffledQuestionsArray`
     } else {
       finishSession();
     }
-    DisplayPagination();
-}
+    controlMgr.displayPagination();
 
-function spliceQuestion() {
-  // Delete shown questions from `shuffleQuestions` array
-  shuffledQuestions.splice(currentQuestionIndex, 1);
-
-  // randomQestion() is called again, if there is still a question left after the splice()
-  shuffledQuestions.length === 0 ? finishSession() : randomQuestion();
-}
-
-function finishSession() {
-  // Clear header, previous question, answers, and pagination; then show the complete message
-  headerContainer.remove();
-  questionContainer.remove();
-  answersContainer.remove();
-  paginationContainer.remove();
-  separatorContainer.remove();
+    // Sub-function #1
+    function isWithinQuestionLimit() {
+      const result = controlMgr.getCurrentQuestionNo() <= controlMgr.getTotalNumOfQuestion();
+      console.log(`isWithinQuestionLimit: ${result}`);
+      return result;
+    }
   
-  mainContainer.classList.add("finished");
-  messageContainer.className = "";
-  messageContainer.classList.add("finished");
-  messageContainer.innerHTML = `Well done!<br>You've completed all the questions.<br><br>Your score: ${score} of ${totalNumOfQuestion}`;
-
-  // Remove Next button from display
-  if (nextButton) {
-    nextButton.remove();
-  }
-
-  reloadContainer.classList.remove("hide");
-  reloadContainer.addEventListener("click", reloadSession);
-}
-
-function reloadSession() {
-  // Clear header, previous question, answers, and pagination; then show the complete message
-  reloadContainer.classList.add("hide");
-  messageContainer.remove();
-  headerContainer.remove();
-  questionContainer.remove();
-  answersContainer.remove();
-  paginationContainer.remove();
-  separatorContainer.remove();
+    // Sub-function #2
+    function isShuffledQuestionsArrayNotEmpty() {
+      const result = contentMgr.getShuffledQuestionsArray().length !== 0;
+      console.log(`isShuffledQuestionsArrayNotEmpty: ${result}`);
+      return result;
+    } 
   
-  //mainContainer.classList.add("finished");
-  //messageContainer.className = "";
-  //messageContainer.classList.add("finished");
-
-  // Remove Next button from display
-  if (nextButton) {
-    nextButton.remove();
+    console.groupEnd();
   }
-  location.reload();
-}
-
-function calScore() {
-  if (noOfTries === 1) {
-    console.log(`Correct on the first time.`);
+  
+  function prepareForNewQuestion() {
+    console.groupCollapsed("prepareForNewQuestion()");
+  
+    global.cleanNode({
+      node: global.messageContainer,
+      isDeepClean: false,
+    });
+    global.removeAllClass({element: global.messageContainer});
+  
+    // reset no. of tries to 1
     noOfTries = 1;
-    console.log(`noOfTries is reset to 1.`);
-    score++;
+    console.info("noOfTries is reset.  Currently:", noOfTries);
+  
+    console.groupEnd();
   }
-  console.log(`Updated score is: ${score}`);
-  return score;
+  
+  function spliceQuestion() {
+    // Delete shown questions from `shuffleQuestions` array
+    contentMgr.spliceShuffledQuestionsArray();
+  
+    // randomQestion() is called again, if there is still a question left after the splice()
+    contentMgr.getShuffledQuestionsArrayLength() === 0 ? finishSession() : contentMgr.randomQuestion();
+  }
+  
+  function finishSession() {
+    // Clear header, previous question, answers, and pagination; then show the complete message
+    global.headerContainer.remove();
+    global.questionContainer.remove();
+    global.answersContainer.remove();
+    global.paginationContainer.remove();
+    global.separatorContainer.remove();
+
+    global.removeAllClass({
+      element: global.messageContainer,
+    });
+
+    global.addClass({
+      element: global.mainContainer,
+      classNames: "finished",
+    });
+
+    global.addClass({
+      element: global.messageContainer,
+      classNames: "finished",
+    });
+    
+    global.messageContainer.innerHTML = `Well done!<br>You've completed all the questions.<br><br>Your score: ${score} of ${controlMgr.getTotalNumOfQuestion()}`;
+  
+    // Remove Next button from display
+    if (global.nextButton) {
+      global.nextButton.remove();
+    }
+  
+    global.removeClass({
+      element: global.reloadContainer,
+      classNames: "hide",
+    });
+
+    global.reloadContainer.addEventListener("click", reloadSession);
+  }
+  
+  function reloadSession() {
+    console.groupCollapsed("reloadSession()");
+  
+    // Clear header, previous question, answers, and pagination; then show the complete message
+    global.removeClass({
+      element: global.reloadContainer,
+      classNames: "hide",
+    });
+    global.messageContainer.remove();
+    global.headerContainer.remove();
+    global.questionContainer.remove();
+    global.answersContainer.remove();
+    global.paginationContainer.remove();
+    global.separatorContainer.remove();
+    
+    // Remove Next button from display
+    if (global.nextButton) {
+      global.nextButton.remove();
+    }
+    location.reload();
+  
+    console.groupEnd();
+  }
+  
+  function calScore() {
+    if (noOfTries === 1) {
+      console.log(`Correct on the first time.`);
+      noOfTries = 1;
+      console.log(`noOfTries is reset to 1.`);
+      score++;
+    }
+    console.log(`Updated score is: ${score}`);
+    return score;
+  }
+
+  function fetchRandomMessage(status) {
+    console.groupCollapsed("fetchRandomMessage()");
+
+    let messageArray;
+    switch (status) {
+      case 'correct':
+        messageArray = correctMessages;
+        console.info("Case:", status, " | Array: ", messageArray);
+        break;
+      case 'incorrect':
+        messageArray = wrongMessages;
+        console.info("Case:", status, " | Array: ", messageArray);
+        break;
+    }
+    console.groupEnd();
+    return messageArray[global.random(0, messageArray.length - 1)];
+  }
+
+  return {
+    handleAnswerClick,
+    nextButtonClick,
+  }
 }
-
-// Fetch questions from JSON file
-fetch('assets/data/questions.json')
-//  The fetch function returns a promise that resolves to the response object 
-//  representing the HTTP response.
-  .then(response => response.json())
-  //  The first .then method takes the response object returned by the fetch request  
-  //  and converts it to JSON using the json() method. This method also returns a promise 
-  //  that resolves to the JSON object.
-  .then(data => {
-    // The second .then method takes the JSON object (now stored in the data variable) 
-    // and assigns it to the questions variable.
-    questions = data;
-    // Copy questions array to shuffledQuestions
-    shuffledQuestions = [...questions]; 
-    // Calls initial functions
-    randomQuestion();
-    DisplayPagination();
-  })
-  .catch(error => console.error('Error loading questions:', error));
-
-// Disable `nextButton` at the start
-nextButton.disabled = true;
