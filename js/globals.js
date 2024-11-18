@@ -25,17 +25,17 @@ let noOfTries = 1;
 let score = 0;*/
 
 function Global() {
-  let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
-  const mainContainer = document.querySelector("#main-container");
-  const headerContainer = document.querySelector("#header");
-  const questionContainer = document.querySelector("#question");
-  const answersContainer = document.querySelector("#section-answers");
-  const paginationContainer = document.querySelector("#section-pagination");
-  const messageContainer = document.querySelector("#message");
-  const nextButton = document.querySelector("#section-next-btn");
-  const separatorContainer = document.querySelector("#section-separator");
-  const reloadContainer = document.querySelector("#section-reload");
+  this.mainContainer = document.querySelector("#main-container");
+  this.headerContainer = document.querySelector("#header");
+  this.questionContainer = document.querySelector("#question");
+  this.answersContainer = document.querySelector("#section-answers");
+  this.paginationContainer = document.querySelector("#section-pagination");
+  this.messageContainer = document.querySelector("#message");
+  this.nextButton = document.querySelector("#section-next-btn");
+  this.separatorContainer = document.querySelector("#section-separator");
+  this.reloadContainer = document.querySelector("#section-reload");
 
+  this.totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
   let currentQuestionIndex; // Index to match the question and the answers.
   let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
   let questions = []; // Data will be fetch from JSON
@@ -51,4 +51,6 @@ function Global() {
   let noOfTries = 1;
   let score = 0;
 }
+
 Global.prototype = mainFunctions;
+

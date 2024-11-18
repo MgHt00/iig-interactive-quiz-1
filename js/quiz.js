@@ -1,4 +1,4 @@
-let globalMgr = new Global();
+const globalMgr = new Global();
 
 (function start() {
   loadJSON();
