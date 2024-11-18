@@ -1,7 +1,9 @@
+let globalMgr = new Global();
+
 (function start() {
   loadJSON();
-  nextButton.disabled = true; // Disable `nextButton` at the start
-  nextButton.addEventListener("click", nextButtonClick); // Add event listener to Next button
+  globalMgr.nextButton.disabled = true; // Disable `globalMgr.nextButton` at the start
+  globalMgr.nextButton.addEventListener("click", nextButtonClick); // Add event listener to Next button
 })();
 
 /*function contentManager() {
@@ -36,23 +38,23 @@ async function loadJSON() {
 function randomQuestion() {
   console.groupCollapsed("randomQuestion()");
 
-  setNodeDisabled({
-    node: nextButton,
+  globalMgr.setNodeDisabled({
+    node: globalMgr.nextButton,
     isDisabled: true,
     changeItFast: true,
   });
 
-  cleanNode({
-    node: answersContainer,
+  globalMgr.cleanNode({
+    node: globalMgr.answersContainer,
     isDeepClean: true,
   }); // Clear previous answers
 
-  // Generate a random question index
-  currentQuestionIndex = random(0, (shuffledQuestions.length-1));
+  // Generate a globalMgr.random question index
+  currentQuestionIndex = globalMgr.random(0, (shuffledQuestions.length-1));
 
   // Display the question
-  addTextContent({
-    node: questionContainer,
+  globalMgr.addTextContent({
+    node: globalMgr.questionContainer,
     content: shuffledQuestions[currentQuestionIndex].question,
   });
 
@@ -77,30 +79,30 @@ function buildAnswerBtn(answer, index) {
   //    <div class="answer-text">aaaaa</div>
   //  </div>
 
-  const tempAnswerContainer = buildNode({
+  const tempAnswerContainer = globalMgr.buildNode({
                                 element: "div", 
                                 classNames: ["answer-container", answerClassList[index]],
                               });
 
-  const tempAnswerAlphabet = buildNode({
+  const tempAnswerAlphabet = globalMgr.buildNode({
                               element : "div",
                               classNames: ["answer-alphabet"],
                             });
 
-  const tempAlphabetImg =  buildNode({
+  const tempAlphabetImg =  globalMgr.buildNode({
                             element : "img",
                           });
 
   tempAlphabetImg.src = alphabetImg[index];
   tempAlphabetImg.alt = alphabetAlt[index];
  
-  const tempAnswerText = buildNode({
+  const tempAnswerText = globalMgr.buildNode({
                           element : "div",
                           classNames : ["answer-text"],
                         });
 
   // JS: assign answer
-  addTextContent({
+  globalMgr.addTextContent({
     node: tempAnswerText,
     content: answer,
   });
@@ -115,7 +117,7 @@ function buildAnswerBtn(answer, index) {
   tempAnswerContainer.addEventListener("click", handleAnswerClick);
 
   // HTML: add 'answer-container' to 'section-answers'
-  answersContainer.append(tempAnswerContainer);
+  globalMgr.answersContainer.append(tempAnswerContainer);
   console.groupEnd();
 
 }
@@ -135,7 +137,7 @@ function fetchRandomMessage(status){
       break;
   }
   console.groupEnd();
-  return messageArray[random(0, messageArray.length-1)];
+  return messageArray[globalMgr.random(0, messageArray.length-1)];
 }
 
 /*function controlManager() {
@@ -145,8 +147,8 @@ function fetchRandomMessage(status){
 function DisplayPagination() {
   console.groupCollapsed("DisplayPagination()");
     
-    cleanNode({ // Clear previous pagination (if needed)
-      node: paginationContainer,
+    globalMgr.cleanNode({ // Clear previous pagination (if needed)
+      node: globalMgr.paginationContainer,
       isDeepClean: true,
     }); 
 
@@ -159,18 +161,18 @@ function DisplayPagination() {
     console.groupEnd();
     
     function buildPagination(i) {
-      const pagination = buildNode({
+      const pagination = globalMgr.buildNode({
         element: "div",
         classNames: ["pagination"],
       });
       // Add 'active' class to show where we are right now with the pagination
       if (i === currentQuestionNo) {
-        addClass({
+        globalMgr.addClass({
           element: pagination,
           classNames: "active"
         });
       }
-      paginationContainer.append(pagination);
+      globalMgr.paginationContainer.append(pagination);
     }
 }
 
@@ -179,7 +181,7 @@ function disableAllBtns() {
 
   const allButtons = document.querySelectorAll(".answer-container");
   for (let button of allButtons) {
-    addClass({
+    globalMgr.addClass({
       element: button,
       classNames: "disabled",
     });
@@ -215,49 +217,49 @@ function handleAnswerClick(event) {
 }
 
 function answerIsCorrect(event) {
-  addClass({ // Adds the `correct` class to the button that was clicked
+  globalMgr.addClass({ // Adds the `correct` class to the button that was clicked
     element: event.target,
     classNames: "correct",
   });
   
   disableAllBtns(); // Disable all buttons
-  setNodeDisabled({ // Simulate re-enabling the NEXT button after 0.3 seconds
-    node: nextButton,
+  globalMgr.setNodeDisabled({ // Simulate re-enabling the NEXT button after 0.3 seconds
+    node: globalMgr.nextButton,
     isDisabled: false,
     changeItFast: true,
   });
   
-  // Show random correct message drawn from `correctMessages` array
-  addTextContent({
-    node: messageContainer,
+  // Show globalMgr.random correct message drawn from `correctMessages` array
+  globalMgr.addTextContent({
+    node: globalMgr.messageContainer,
     content: fetchRandomMessage("correct"),
   });
   
-  // Remove all classes of the messageContainer
-  removeAllClass({element: messageContainer});
+  // Remove all classes of the globalMgr.messageContainer
+  globalMgr.removeAllClass({element: globalMgr.messageContainer});
 
-  addClass({
-    element: messageContainer,
+  globalMgr.addClass({
+    element: globalMgr.messageContainer,
     classNames: "correct",
   });
 }
 
 function answerIsNotCorrect(event) {
   // Adds the `incorrect` class to the button that was clicked
-  addClass({
+  globalMgr.addClass({
     element: event.target,
     classNames: "disabled",
   });
-  addTextContent({
-    node: messageContainer,
+  globalMgr.addTextContent({
+    node: globalMgr.messageContainer,
     content: fetchRandomMessage("incorrect"),
   });
 
-  // Remove all classes of the messageContainer
-  removeAllClass({element: messageContainer});
+  // Remove all classes of the globalMgr.messageContainer
+  globalMgr.removeAllClass({element: globalMgr.messageContainer});
 
-  addClass({
-    element: messageContainer,
+  globalMgr.addClass({
+    element: globalMgr.messageContainer,
     classNames: "incorrect",
   });
   noOfTries++;
@@ -283,11 +285,11 @@ function nextButtonClick(event) {
 function prepareForNewQuestion() {
   console.groupCollapsed("prepareForNewQuestion()");
 
-  cleanNode({
-    node: messageContainer,
+  globalMgr.cleanNode({
+    node: globalMgr.messageContainer,
     isDeepClean: false,
   });
-  removeAllClass({element: messageContainer});
+  globalMgr.removeAllClass({element: globalMgr.messageContainer});
 
   // reset no. of tries to 1
   noOfTries = 1;
@@ -306,44 +308,44 @@ function spliceQuestion() {
 
 function finishSession() {
   // Clear header, previous question, answers, and pagination; then show the complete message
-  headerContainer.remove();
-  questionContainer.remove();
-  answersContainer.remove();
-  paginationContainer.remove();
-  separatorContainer.remove();
+  globalMgr.globalMgr.headerContainer.remove();
+  globalMgr.questionContainer.remove();
+  globalMgr.answersContainer.remove();
+  globalMgr.paginationContainer.remove();
+  globalMgr.separatorContainer.remove();
   
-  mainContainer.classList.add("finished");
-  messageContainer.className = "";
-  messageContainer.classList.add("finished");
-  messageContainer.innerHTML = `Well done!<br>You've completed all the questions.<br><br>Your score: ${score} of ${totalNumOfQuestion}`;
+  globalMgr.mainContainer.classList.add("finished");
+  globalMgr.messageContainer.className = "";
+  globalMgr.messageContainer.classList.add("finished");
+  globalMgr.messageContainer.innerHTML = `Well done!<br>You've completed all the questions.<br><br>Your score: ${score} of ${totalNumOfQuestion}`;
 
   // Remove Next button from display
-  if (nextButton) {
-    nextButton.remove();
+  if (globalMgr.nextButton) {
+    globalMgr.nextButton.remove();
   }
 
-  reloadContainer.classList.remove("hide");
-  reloadContainer.addEventListener("click", reloadSession);
+  globalMgr.reloadContainer.classList.remove("hide");
+  globalMgr.reloadContainer.addEventListener("click", reloadSession);
 }
 
 function reloadSession() {
   console.groupCollapsed("reloadSession()");
 
   // Clear header, previous question, answers, and pagination; then show the complete message
-  removeClass({
-    element: reloadContainer,
+  globalMgr.removeClass({
+    element: globalMgr.reloadContainer,
     classNames: "hide",
   });
-  messageContainer.remove();
-  headerContainer.remove();
-  questionContainer.remove();
-  answersContainer.remove();
-  paginationContainer.remove();
-  separatorContainer.remove();
+  globalMgr.messageContainer.remove();
+  globalMgr.globalMgr.headerContainer.remove();
+  globalMgr.questionContainer.remove();
+  globalMgr.answersContainer.remove();
+  globalMgr.paginationContainer.remove();
+  globalMgr.separatorContainer.remove();
   
   // Remove Next button from display
-  if (nextButton) {
-    nextButton.remove();
+  if (globalMgr.nextButton) {
+    globalMgr.nextButton.remove();
   }
   location.reload();
 
