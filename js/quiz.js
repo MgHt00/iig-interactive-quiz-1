@@ -11,7 +11,7 @@ const listenerMgr = listenerManager();
 
 function contentManager() {
   let questions = []; // Data will be fetch from JSON
-  let shuffledQuestions = []; // To copy the questions array to manipulate without touching the original question array.
+  let shuffledQuestionsArray = []; // To copy the questions array to manipulate without touching the original question array.
   let currentQuestionIndex; // Index to match the question and the answers.
 
   const answerClassList = ["ans-a", "ans-b", "ans-c", "ans-d"];
@@ -38,11 +38,11 @@ function contentManager() {
         // The second .then method takes the JSON object (now stored in the data variable) 
         // and assigns it to the questions variable.
         questions = data;
-        // Copy questions array to shuffledQuestions
-        shuffledQuestions = [...questions];
+        // Copy questions array to shuffledQuestionsArray
+        shuffledQuestionsArray = [...questions];
         // Calls initial functions
         console.log("question:", questions);
-        console.log("shuffledQuestions:", shuffledQuestions);
+        console.log("shuffledQuestionsArray:", shuffledQuestionsArray);
         console.groupEnd();
       })
       .catch(error => console.error('Error loading questions:', error));
@@ -55,9 +55,9 @@ function contentManager() {
       const response = await fetch('assets/data/questions.json'); // Fetch data using await
       const data = await response.json(); // Convert to JSON using await
       questions = data; // Assign the fetched data to questions
-      shuffledQuestions = [...questions]; // Copy to shuffledQuestions
+      shuffledQuestionsArray = [...questions]; // Copy to shuffledQuestionsArray
       console.log("questions:", questions);
-      console.log("shuffledQuestions:", shuffledQuestions);
+      console.log("shuffledQuestionsArray:", shuffledQuestionsArray);
     } catch (error) {
       console.error('Error loading questions:', error);
     }
@@ -79,17 +79,17 @@ function contentManager() {
     }); // Clear previous answers
 
     // Generate a global.random question index
-    currentQuestionIndex = global.random(0, (shuffledQuestions.length - 1));
+    currentQuestionIndex = global.random(0, (shuffledQuestionsArray.length - 1));
     console.info("currentQuestionIndex:", currentQuestionIndex);
 
     // Display the question
     global.addTextContent({
       node: global.questionContainer,
-      content: shuffledQuestions[currentQuestionIndex].question,
+      content: shuffledQuestionsArray[currentQuestionIndex].question,
     });
 
-    // Copy `answers` array from `shuffledQuestions` to a temporary array
-    let tempAnswersArray = [...shuffledQuestions[currentQuestionIndex].answers];
+    // Copy `answers` array from `shuffledQuestionsArray` to a temporary array
+    let tempAnswersArray = [...shuffledQuestionsArray[currentQuestionIndex].answers];
 
     // Display the answers
     tempAnswersArray.forEach((answer, index) => {
@@ -152,10 +152,20 @@ function contentManager() {
 
   }
 
+  function getcurrentQuestionIndex() {
+    return currentQuestionIndex;
+  }
+
+  function getshuffledQuestionsArray() {
+    return shuffledQuestionsArray;
+  }
+
   return {
     start,
     loadJSON,
     randomQuestion,
+    getcurrentQuestionIndex,
+    getshuffledQuestionsArray,
   }
 }
 
@@ -228,10 +238,8 @@ function listenerManager() {
   
     const selectedAnswer = event.target.textContent;
     console.info(`Previous score is ${score}`);
-  
-    // Assign currently showing question and answer set to a temp object.
-    console.info("contentMgr.currentQuestionIndex:", contentMgr.currentQuestionIndex);
-    const currentQuestionSet = contentMgr.shuffledQuestions[contentMgr.currentQuestionIndex];
+    
+    const currentQuestionSet = fetchCurrentQuestionSet();
   
     // If the answer is correct
     if (selectedAnswer === currentQuestionSet.correctAnswer) {
@@ -244,6 +252,18 @@ function listenerManager() {
     score = calScore();
   
     console.groupEnd();
+  }
+
+  // Assign currently showing question and answer set to a temp object.
+  function fetchCurrentQuestionSet() {
+    console.groupCollapsed("fetchCurrentQuestionSet()");
+
+    console.info("contentMgr.currentQuestionIndex:", contentMgr.getcurrentQuestionIndex());
+    let fetchedArray = contentMgr.getshuffledQuestionsArray();
+    let fetchedIndex = contentMgr.getcurrentQuestionIndex();
+
+    console.groupEnd();
+    return fetchedArray[fetchedIndex];
   }
   
   function answerIsCorrect(event) {
@@ -301,8 +321,8 @@ function listenerManager() {
     console.groupCollapsed("nextButtonClick()");
   
     prepareForNewQuestion();
-    // spliceQuestion() is called, if there is still a question left in `shuffledQuestions`
-    if ((currentQuestionNo <= totalNumOfQuestion) && (contentMgr.shuffledQuestions.length !== 0)) {
+    // spliceQuestion() is called, if there is still a question left in `shuffledQuestionsArray`
+    if ((currentQuestionNo <= totalNumOfQuestion) && (contentMgr.shuffledQuestionsArray.length !== 0)) {
       spliceQuestion();
     } else {
       finishSession();
@@ -330,10 +350,10 @@ function listenerManager() {
   
   function spliceQuestion() {
     // Delete shown questions from `shuffleQuestions` array
-    contentMgr.shuffledQuestions.splice(contentMgr.currentQuestionIndex, 1);
+    contentMgr.shuffledQuestionsArray.splice(contentMgr.getcurrentQuestionIndex(), 1);
   
     // randomQestion() is called again, if there is still a question left after the splice()
-    contentMgr.shuffledQuestions.length === 0 ? finishSession() : contentMgr.randomQuestion();
+    contentMgr.shuffledQuestionsArray.length === 0 ? finishSession() : contentMgr.randomQuestion();
   }
   
   function finishSession() {
