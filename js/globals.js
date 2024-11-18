@@ -35,8 +35,8 @@ function Global() {
   this.separatorContainer = document.querySelector("#section-separator");
   this.reloadContainer = document.querySelector("#section-reload");
 
-  let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
-  let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
+  /*let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
+  let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.*/
   /*  
     let questions = []; // Data will be fetch from JSON
     let shuffledQuestions = []; // To copy the questions array to manipulate without touching the original question array.

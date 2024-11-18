@@ -1,7 +1,11 @@
 let mainFunctions = {
   // To generate a random number
   random(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    console.groupCollapsed("random()");
+    const randonNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    console.info("min:", min, "max:", max,"randonNumber:", randonNumber)
+    console.groupEnd();
+    return randonNumber
   },
 
   // Toggling the disabled state of a node with an optional delay

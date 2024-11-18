@@ -3,8 +3,8 @@ const contentMgr = contentManager();
 const controlMgr = controlManager(); 
 const listenerMgr = listenerManager();
 
-(function start() {
-  contentMgr.loadJSON();
+(function initialize() {
+  contentMgr.start();
   global.nextButton.disabled = true; // Disable `global.nextButton` at the start
   global.nextButton.addEventListener("click", listenerMgr.listenerMgr); // Add event listener to Next button
 })();
@@ -18,8 +18,13 @@ function contentManager() {
   const alphabetImg = ["assets/a.png", "assets/b.png", "assets/c.png", "assets/d.png"];
   const alphabetAlt = ["a", "b", "c", "d"];
 
+  async function start() {
+    await loadJSON();
+    randomQuestion();
+    controlMgr.displayPagination();
+  }
 
-  async function loadJSON() {
+  /*async function loadJSON() {
     console.groupCollapsed("loadJSON()");
     // Fetch questions from JSON file
     fetch('assets/data/questions.json')
@@ -38,10 +43,24 @@ function contentManager() {
         // Calls initial functions
         console.log("question:", questions);
         console.log("shuffledQuestions:", shuffledQuestions);
-        randomQuestion();
-        controlMgr.displayPagination();
+        console.groupEnd();
       })
       .catch(error => console.error('Error loading questions:', error));
+    
+  }*/
+
+  async function loadJSON() {
+    console.groupCollapsed("loadJSON()");
+    try {
+      const response = await fetch('assets/data/questions.json'); // Fetch data using await
+      const data = await response.json(); // Convert to JSON using await
+      questions = data; // Assign the fetched data to questions
+      shuffledQuestions = [...questions]; // Copy to shuffledQuestions
+      console.log("questions:", questions);
+      console.log("shuffledQuestions:", shuffledQuestions);
+    } catch (error) {
+      console.error('Error loading questions:', error);
+    }
     console.groupEnd();
   }
 
@@ -61,6 +80,7 @@ function contentManager() {
 
     // Generate a global.random question index
     currentQuestionIndex = global.random(0, (shuffledQuestions.length - 1));
+    console.info("currentQuestionIndex:", currentQuestionIndex);
 
     // Display the question
     global.addTextContent({
@@ -133,12 +153,16 @@ function contentManager() {
   }
 
   return {
+    start,
     loadJSON,
     randomQuestion,
   }
 }
 
 function controlManager() {
+  let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
+  let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
+
   function displayPagination() {
     console.groupCollapsed("displayPagination()");
       
@@ -206,7 +230,8 @@ function listenerManager() {
     console.info(`Previous score is ${score}`);
   
     // Assign currently showing question and answer set to a temp object.
-    const currentQuestionSet = shuffledQuestions[currentQuestionIndex];
+    console.info("contentMgr.currentQuestionIndex:", contentMgr.currentQuestionIndex);
+    const currentQuestionSet = contentMgr.shuffledQuestions[contentMgr.currentQuestionIndex];
   
     // If the answer is correct
     if (selectedAnswer === currentQuestionSet.correctAnswer) {
@@ -277,7 +302,7 @@ function listenerManager() {
   
     prepareForNewQuestion();
     // spliceQuestion() is called, if there is still a question left in `shuffledQuestions`
-    if ((currentQuestionNo <= totalNumOfQuestion) && (shuffledQuestions.length !== 0)) {
+    if ((currentQuestionNo <= totalNumOfQuestion) && (contentMgr.shuffledQuestions.length !== 0)) {
       spliceQuestion();
     } else {
       finishSession();
@@ -305,10 +330,10 @@ function listenerManager() {
   
   function spliceQuestion() {
     // Delete shown questions from `shuffleQuestions` array
-    shuffledQuestions.splice(currentQuestionIndex, 1);
+    contentMgr.shuffledQuestions.splice(contentMgr.currentQuestionIndex, 1);
   
     // randomQestion() is called again, if there is still a question left after the splice()
-    shuffledQuestions.length === 0 ? finishSession() : contentMgr.randomQuestion();
+    contentMgr.shuffledQuestions.length === 0 ? finishSession() : contentMgr.randomQuestion();
   }
   
   function finishSession() {
