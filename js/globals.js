@@ -10,5 +10,4 @@ function Global() {
   this.reloadContainer = document.querySelector("#section-reload");
 }
 
-Global.prototype = mainFunctions;
-
+Object.assign(Global.prototype, mainFunctions);
