@@ -1,6 +1,8 @@
+import { DisplayUtils } from "./displayUtils.js";
+
 export class DomUtils {
   constructor() {
-    
+    this.displayUtils = new DisplayUtils();
   }
 
   // Toggling the disabled state of a node with an optional delay
@@ -58,7 +60,7 @@ export class DomUtils {
     const BLK = document.createElement(element);
 
     // Add classes if provided
-    this.addClass({ element: BLK, classNames });
+    this.displayUtils.addClass({ element: BLK, classNames });
 
     console.groupEnd();
     return BLK;

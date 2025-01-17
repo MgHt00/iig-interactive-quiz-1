@@ -1,6 +1,6 @@
 export default controlManager;
 
-function controlManager() {
+function controlManager(global) {
   let totalNumOfQuestion = 5; // Set the total num of questions to show in the quiz.
   let currentQuestionNo = 1; // For paginations and to contol the number of questions to be shown.
 

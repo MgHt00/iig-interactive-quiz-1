@@ -3,9 +3,9 @@ import contentManager from "./contentManager.js";
 import controlManager from "./controlManager.js";
 
 function listenerManager(global) {
-  const contentMgr = contentManager(global);
+  const contentMgr = contentManager(global, listenerManager);
   const controlMgr = controlManager(global); 
-  
+
   const correctMessages = ["Fantastic!", "Awesome!", "Brilliant!", "Great job!", "Excellent!", "Superb!", "Outstanding!"];
   const wrongMessages = ["Almost there!", "Keep going!", "Nice effort!", "Keep practicing!", "Good try!"];
 
