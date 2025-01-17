@@ -1,4 +1,4 @@
-let mainFunctions = {
+mainFunctions = {
   // To generate a random number
   random(min, max) {
     console.groupCollapsed("random()");
