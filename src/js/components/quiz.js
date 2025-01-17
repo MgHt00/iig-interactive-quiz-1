@@ -6,14 +6,21 @@ export class Quiz {
   constructor(globalInstance) {
     this.global = globalInstance;
     this.controlMgr = controlManager(this.global); 
-    this.contentMgr = contentManager(this.global, listenerManager, this.controlMgr);
-    this.listenerMgr = listenerManager(this.global, contentManager, this.controlMgr);
+    
+    // First initialize contentMgr with a placeholder or null for listenerMgr
+    this.contentMgr = contentManager(this.global, null, this.controlMgr); 
+    
+    // Now initialize listenerMgr, passing the contentMgr to it
+    this.listenerMgr = listenerManager(this.global, this.contentMgr, this.controlMgr); 
+    
+    // Now, update contentMgr with the correct listenerMgr
+    this.contentMgr = contentManager(this.global, this.listenerMgr, this.controlMgr);
   }
 
   initialize() {
     console.info("quiz.js -> initialize()");
     this.contentMgr.start();
-    global.nextButton.disabled = true; // Disable `global.nextButton` at the start
-    global.nextButton.addEventListener("click", listenerMgr.nextButtonClick); // Add event listener to Next button
+    this.global.nextButton.disabled = true; // Disable `global.nextButton` at the start
+    this.global.nextButton.addEventListener("click", this.listenerMgr.nextButtonClick); // Add event listener to Next button
   }
 }

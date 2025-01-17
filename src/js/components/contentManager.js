@@ -115,7 +115,6 @@ function contentManager(global, listenerMgr, controlMgr) {
     // HTML: add 'answer-container' to 'section-answers'
     global.answersContainer.append(tempAnswerContainer);
     console.groupEnd();
-
   }
 
   function spliceShuffledQuestionsArray() {
