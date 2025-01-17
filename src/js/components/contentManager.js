@@ -1,6 +1,6 @@
 export default contentManager;
 
-function contentManager(global, listenerMgr) {
+function contentManager(global, listenerMgr, controlMgr) {
   let questions = []; // Data will be fetch from JSON
   let shuffledQuestionsArray = []; // To copy the questions array to manipulate without touching the original question array.
   let currentQuestionIndex; // Index to match the question and the answers.

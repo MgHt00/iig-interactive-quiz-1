@@ -5,9 +5,9 @@ import listenerManager from "./listenerManager.js";
 export class Quiz {
   constructor(globalInstance) {
     this.global = globalInstance;
-    this.contentMgr = contentManager(this.global);
     this.controlMgr = controlManager(this.global); 
-    this.listenerMgr = listenerManager(this.global);
+    this.contentMgr = contentManager(this.global, listenerManager, this.controlMgr);
+    this.listenerMgr = listenerManager(this.global, contentManager, this.controlMgr);
   }
 
   initialize() {
