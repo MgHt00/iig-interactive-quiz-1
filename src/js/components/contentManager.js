@@ -22,7 +22,7 @@ function contentManager(global, listenerMgr, controlMgr) {
       const data = await response.json(); // Convert to JSON using await
       questions = data; // Assign the fetched data to questions
       shuffledQuestionsArray = [...questions]; // Copy to shuffledQuestionsArray
-      console.log("questions:", questions);
+      //console.log("questions:", questions);
       console.log("shuffledQuestionsArray:", shuffledQuestionsArray);
     } catch (error) {
       console.error('Error loading questions:', error);
