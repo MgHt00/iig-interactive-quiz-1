@@ -1,11 +1,12 @@
-import contentManager from "./contentManager.js";
+/*import contentManager from "./contentManager.js";
 import controlManager from "./controlManager.js";
-import listenerManager from "./listenerManager.js";
+import listenerManager from "./listenerManager.js";*/
 
 export class Quiz {
-  constructor(globalInstance) {
+  constructor(globalInstance, controlInstance, listenerInstance, contentInstance) {
     this.global = globalInstance;
-    this.controlMgr = controlManager(this.global); 
+    
+    /*this.controlMgr = controlManager(this.global); 
     
     // First initialize contentMgr with a placeholder or null for listenerMgr
     this.contentMgr = contentManager(this.global, null, this.controlMgr); 
@@ -14,7 +15,11 @@ export class Quiz {
     this.listenerMgr = listenerManager(this.global, this.contentMgr, this.controlMgr); 
     
     // Now, update contentMgr with the correct listenerMgr
-    this.contentMgr = contentManager(this.global, this.listenerMgr, this.controlMgr);
+    this.contentMgr = contentManager(this.global, this.listenerMgr, this.controlMgr);*/
+    
+    this.controlMgr = controlInstance;
+    this.listenerMgr = listenerInstance;
+    this.contentMgr =  contentInstance;
   
   }
 
