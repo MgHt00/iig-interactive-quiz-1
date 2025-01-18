@@ -14,7 +14,7 @@ function listenerManager(global, contentMgr, controlMgr) {
     const selectedAnswer = event.target.textContent;
     console.info(`Previous score is ${score}`);
     
-    const currentQuestionSet = fetchCurrentQuestionSet();
+    const currentQuestionSet = fetchCurrentQuestionSet(contentMgr);
   
     // If the answer is correct
     if (selectedAnswer === currentQuestionSet.correctAnswer) {
@@ -32,9 +32,10 @@ function listenerManager(global, contentMgr, controlMgr) {
   // Assign currently showing question and answer set to a temp object.
   function fetchCurrentQuestionSet() {
     console.groupCollapsed("fetchCurrentQuestionSet()");
-
+    console.info(contentMgr);
     console.info("contentMgr.currentQuestionIndex:", contentMgr.getCurrentQuestionIndex());
     let fetchedArray = contentMgr.getShuffledQuestionsArray();
+    //console.info();
     let fetchedIndex = contentMgr.getCurrentQuestionIndex();
 
     console.groupEnd();

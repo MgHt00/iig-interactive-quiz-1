@@ -124,7 +124,10 @@ function contentManager(global, listenerMgr, controlMgr) {
     console.groupEnd();
   }
   
-  function getCurrentQuestionIndex() { return currentQuestionIndex; }
+  function getCurrentQuestionIndex() { 
+    console.info("You are in getcurrentQuestionIndex:", currentQuestionIndex);
+    return currentQuestionIndex; 
+  }
   function getShuffledQuestionsArray() { return shuffledQuestionsArray; }
   function getShuffledQuestionsArrayLength() { return shuffledQuestionsArray.length; }
 

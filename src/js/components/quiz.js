@@ -15,6 +15,7 @@ export class Quiz {
     
     // Now, update contentMgr with the correct listenerMgr
     this.contentMgr = contentManager(this.global, this.listenerMgr, this.controlMgr);
+  
   }
 
   initialize() {
