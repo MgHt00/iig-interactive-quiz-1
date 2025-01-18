@@ -8,18 +8,15 @@ export class Quiz {
     
     /*this.controlMgr = controlManager(this.global); 
     
-    // First initialize contentMgr with a placeholder or null for listenerMgr
-    this.contentMgr = contentManager(this.global, null, this.controlMgr); 
+    // Initialize listenerMgr with a temporary contentMgr reference [LE01]
+    this.listenerMgr = null;
+    this.contentMgr = contentManager(this.global, this.listenerMgr, this.controlMgr); 
     
-    // Now initialize listenerMgr, passing the contentMgr to it
+    // Now that contentMgr is initialized, assign it to listenerMgr
     this.listenerMgr = listenerManager(this.global, this.contentMgr, this.controlMgr); 
     
-    // Now, update contentMgr with the correct listenerMgr
-    this.contentMgr = contentManager(this.global, this.listenerMgr, this.controlMgr);*/
-    
-    this.controlMgr = controlInstance;
-    this.listenerMgr = listenerInstance;
-    this.contentMgr =  contentInstance;
+    // Update the contentMgr's reference to listenerMgr
+    this.contentMgr.setListenerMgr(this.listenerMgr);
   
   }
 
