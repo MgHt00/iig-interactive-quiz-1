@@ -1,6 +1,11 @@
 export default contentManager;
 
 function contentManager(global, listenerMgr, controlMgr) {
+
+  function setListenerMgr(listenerMgrInstance) {
+    listenerMgr = listenerMgrInstance; //[LE01]
+  }
+
   let questions = []; // Data will be fetch from JSON
   let shuffledQuestionsArray = []; // To copy the questions array to manipulate without touching the original question array.
   let currentQuestionIndex; // Index to match the question and the answers.
@@ -132,6 +137,7 @@ function contentManager(global, listenerMgr, controlMgr) {
   function getShuffledQuestionsArrayLength() { return shuffledQuestionsArray.length; }
 
   return {
+    setListenerMgr,
     start,
     loadJSON,
     randomQuestion,
