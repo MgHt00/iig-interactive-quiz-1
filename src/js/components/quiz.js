@@ -20,7 +20,6 @@ export class Quiz {
   }
 
   initialize() {
-    console.info("quiz.js -> initialize()");
     this.contentMgr.start();
     this.global.nextButton.disabled = true; // Disable `global.nextButton` at the start
     this.global.nextButton.addEventListener("click", this.listenerMgr.nextButtonClick); // Add event listener to Next button

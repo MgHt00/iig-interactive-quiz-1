@@ -1,7 +1,6 @@
 export default listenerManager;
 
 function listenerManager(global, contentMgr, controlMgr) {
-  console.log("listenerManager:", contentMgr)
   const correctMessages = ["Fantastic!", "Awesome!", "Brilliant!", "Great job!", "Excellent!", "Superb!", "Outstanding!"];
   const wrongMessages = ["Almost there!", "Keep going!", "Nice effort!", "Keep practicing!", "Good try!"];
 
@@ -33,10 +32,8 @@ function listenerManager(global, contentMgr, controlMgr) {
   // Assign currently showing question and answer set to a temp object.
   function fetchCurrentQuestionSet() {
     console.groupCollapsed("fetchCurrentQuestionSet()");
-    console.info(contentMgr);
-    console.info("contentMgr.currentQuestionIndex:", contentMgr.getCurrentQuestionIndex());
+
     let fetchedArray = contentMgr.getShuffledQuestionsArray();
-    //console.info();
     let fetchedIndex = contentMgr.getCurrentQuestionIndex();
 
     console.groupEnd();
