@@ -4,16 +4,14 @@ function listenerManager(global, contentMgr, controlMgr) {
   const correctMessages = ["Fantastic!", "Awesome!", "Brilliant!", "Great job!", "Excellent!", "Superb!", "Outstanding!"];
   const wrongMessages = ["Almost there!", "Keep going!", "Nice effort!", "Keep practicing!", "Good try!"];
 
-  let noOfTries = 1;
+  let noOfTries = 0;
   let score = 0;
 
   // When the answer button is clicked
   function handleAnswerClick(event) {
     console.groupCollapsed("handleAnswerClick()");
   
-    const selectedAnswer = event.target.textContent;
-    console.info(`Previous score is ${score}`);
-    
+    const selectedAnswer = event.target.textContent;    
     const currentQuestionSet = fetchCurrentQuestionSet(contentMgr);
   
     // If the answer is correct
@@ -24,8 +22,7 @@ function listenerManager(global, contentMgr, controlMgr) {
     else {
       answerIsNotCorrect(event);
     }
-    score = calScore();
-  
+    calScore();
     console.groupEnd();
   }
 
@@ -70,6 +67,7 @@ function listenerManager(global, contentMgr, controlMgr) {
   
 
   function answerIsNotCorrect(event) {
+    console.groupCollapsed("answerIsNotCorrect()");
     const answerContainer = event.target.closest('.answer-container'); // [LE02]
 
     if (answerContainer) {
@@ -101,13 +99,16 @@ function listenerManager(global, contentMgr, controlMgr) {
       node: global.messageContainer,
       content: fetchRandomMessage("incorrect"),
     });
+    increseNoOfTires();
+    console.groupEnd();
   }
 
 
   function nextButtonClick(event) {
     console.groupCollapsed("nextButtonClick()");
-  
+    
     prepareForNewQuestion();
+
     if (isWithinQuestionLimit() && isShuffledQuestionsArrayNotEmpty()) { // calling sub-functions
       spliceQuestion(); // spliceQuestion() is called, if there is still a question left in `shuffledQuestionsArray`
     } else {
@@ -115,36 +116,33 @@ function listenerManager(global, contentMgr, controlMgr) {
     }
     controlMgr.displayPagination();
 
-    // Sub-function #1
+    // Helper functions
     function isWithinQuestionLimit() {
       const result = controlMgr.getCurrentQuestionNo() <= controlMgr.getTotalNumOfQuestion();
       console.log(`isWithinQuestionLimit: ${result}`);
       return result;
     }
   
-    // Sub-function #2
     function isShuffledQuestionsArrayNotEmpty() {
       const result = contentMgr.getShuffledQuestionsArray().length !== 0;
       console.log(`isShuffledQuestionsArrayNotEmpty: ${result}`);
       return result;
-    } 
+    }
+    // Helpers end 
   
     console.groupEnd();
   }
   
   function prepareForNewQuestion() {
     console.groupCollapsed("prepareForNewQuestion()");
-  
+    
     global.cleanNode({
       node: global.messageContainer,
       isDeepClean: false,
     });
     global.removeAllClass({element: global.messageContainer});
-  
-    // reset no. of tries to 1
-    noOfTries = 1;
-    console.info("noOfTries is reset.  Currently:", noOfTries);
-  
+    resetNoOfTries();  
+
     console.groupEnd();
   }
   
@@ -212,20 +210,41 @@ function listenerManager(global, contentMgr, controlMgr) {
     if (global.nextButton) {
       global.nextButton.remove();
     }
-    location.reload();
+
+    resetScore();
+    resetNoOfTries();
+    location.reload(); // JS built-in function; similar to how the refresh button works
   
     console.groupEnd();
   }
   
   function calScore() {
-    if (noOfTries === 1) {
+    console.groupCollapsed("calScore()");
+    console.info(`Previous score: ${score}, noOfTries: ${noOfTries}`);
+    if (noOfTries === 0) {
       console.log(`Correct on the first time.`);
-      noOfTries = 1;
-      console.log(`noOfTries is reset to 1.`);
-      score++;
+      increaseScore();  
     }
     console.log(`Updated score is: ${score}`);
-    return score;
+    console.groupEnd();
+  }
+
+  function increaseScore() {
+    score++;
+  }
+
+  function resetScore() {
+    score = 0;
+  }
+
+  function increseNoOfTires() {
+    noOfTries++;
+    console.info("noOfTires:",noOfTries);
+  }
+
+  function resetNoOfTries() {
+    noOfTries = 0;
+    console.info("noOfTires reset to zero.");
   }
 
   function fetchRandomMessage(status) {
