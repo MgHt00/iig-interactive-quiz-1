@@ -201,6 +201,11 @@ body {
   box-shadow: 0px 6px 0px var(--answer-container-shadow, #D8D5EA);
   border-radius: var(--answer-container-border-radius, 20px);
   transition: background-color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+.answer-container .answer-alphabet {
+  cursor: pointer;
 }
 
 .answer-container.ans-a {
@@ -226,12 +231,17 @@ body {
   font-size: var(--answer-text-font-size, 22px);
   line-height: var(--answer-text-line-height, 33px);
   color: var(--answer-text-color, #252525);
+  cursor: pointer;
 }
 
 .answer-container:not(.disabled):hover,
 #section-next-btn:not(.disabled):hover,
 #section-reload:hover {
   transform: scale(1.05);
+}
+
+#section-next-btn.next-btn {
+  cursor: pointer;
 }
 
 .disabled {

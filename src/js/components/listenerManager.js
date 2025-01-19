@@ -68,29 +68,42 @@ function listenerManager(global, contentMgr, controlMgr) {
     });
   }
   
+
   function answerIsNotCorrect(event) {
-    // Adds the `incorrect` class to the button that was clicked
-    global.addClass({
-      element: event.target,
-      classNames: "disabled",
-    });
+    const answerContainer = event.target.closest('.answer-container'); // [LE02]
+
+    if (answerContainer) {
+      // Adds the `disabled` class to the container, image, and text elements
+      global.addClass({
+        element: answerContainer,
+        classNames: "disabled",
+      });
+
+      const answerImg = answerContainer.querySelector('img');
+      const answerText = answerContainer.querySelector('.answer-text');
+
+      if (answerImg) {
+        global.addClass({
+          element: answerImg,
+          classNames: "disabled",
+        });
+      }
+
+      if (answerText) {
+        global.addClass({
+          element: answerText,
+          classNames: "disabled",
+        });
+      }
+    }
+
     global.addTextContent({
       node: global.messageContainer,
       content: fetchRandomMessage("incorrect"),
     });
-  
-    // Remove all classes of the global.messageContainer
-    global.removeAllClass({element: global.messageContainer});
-  
-    global.addClass({
-      element: global.messageContainer,
-      classNames: "incorrect",
-    });
-    noOfTries++;
-    console.info(`Incorrect answser.`);
-    console.info(`noOfTries is increased as: ${noOfTries}`);
   }
-  
+
+
   function nextButtonClick(event) {
     console.groupCollapsed("nextButtonClick()");
   
