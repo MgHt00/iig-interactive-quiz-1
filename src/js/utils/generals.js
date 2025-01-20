@@ -8,8 +8,21 @@ export class Generals {
       return null;
     }
     const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-    console.info("min:", min, "max:", max,"randonNumber:", randonNumber)
+    console.info("min:", min, "max:", max,"randonNumber:", randomNumber)
     console.groupEnd();
     return randomNumber;
+  }
+
+  // Construct an absolute URL from a relative path
+  constructAbsoluteURL(path) {
+    console.groupCollapsed("constructAbsoluteURL()");
+    if (!path.startsWith('/')) { // ensuring the path starts with a / to avoid any relative path issues.
+      path = '/' + path;
+    }
+    const currentURL = new URL(window.location.href);
+    const absoluteURL = new URL(path, currentURL.origin);
+    console.info("Path:", path, "Absolute URL:", absoluteURL.href);
+    console.groupEnd();
+    return absoluteURL.href;
   }
 }
