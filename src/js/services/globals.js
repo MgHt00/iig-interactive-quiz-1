@@ -23,6 +23,10 @@ export class Global {
     return this.generals.random(min, max);
   }
 
+  constructAbsoluteURL(path) {
+    return this.generals.constructAbsoluteURL(path);
+  }
+
   setNodeDisabled({ node, isDisabled, changeItFast }) {
     return this.domUtils.setNodeDisabled({ node, isDisabled, changeItFast });
   }
